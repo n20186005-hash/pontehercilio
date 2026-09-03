@@ -1,0 +1,87 @@
+---
+import '../styles/global.css';
+import Logo from '../components/Logo.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  path?: string;
+  imagePath?: string;
+  schema?: Record<string, unknown> | Array<Record<string, unknown>>;
+  noindex?: boolean;
+}
+
+const { title, description, path = '/', imagePath = '/images/ponte-hercilio-luz-hero.jpg', schema, noindex = false } = Astro.props;
+const site = Astro.site;
+const canonical = site ? new URL(path, site).toString() : undefined;
+const ogImage = site ? new URL(imagePath, site).toString() : undefined;
+const schemas = Array.isArray(schema) ? schema : schema ? [schema] : [];
+---
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#07141d" />
+    {noindex && <meta name="robots" content="noindex,follow" />}
+    <title>{title}</title>
+    {canonical && <link rel="canonical" href={canonical} />}
+    <link rel="icon" type="image/svg+xml" href="/brand/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/brand/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/brand/favicon-16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/brand/apple-touch-icon.png" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    {canonical && <meta property="og:url" content={canonical} />}
+    {ogImage && <meta property="og:image" content={ogImage} />}
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    {ogImage && <meta name="twitter:image" content={ogImage} />}
+    {schemas.map((item) => <script type="application/ld+json" set:html={JSON.stringify(item)} />)}
+    <script is:inline>
+      (() => {
+        const KEY = 'phl-cookie-preferences';
+        const loadAnalytics = () => {
+          if (window.__phlAnalyticsLoaded) return;
+          window.__phlAnalyticsLoaded = true;
+          window.dataLayer = window.dataLayer || [];
+          window.gtag = function(){ window.dataLayer.push(arguments); };
+          window.gtag('js', new Date());
+          window.gtag('config', 'G-HXM22WWPKP', { anonymize_ip: true });
+          const script = document.createElement('script');
+          script.async = true;
+          script.src = 'https://www.googletagmanager.com/gtag/js?id=G-HXM22WWPKP';
+          document.head.appendChild(script);
+        };
+        try {
+          const saved = JSON.parse(localStorage.getItem(KEY) || 'null');
+          if (saved?.analytics === true) loadAnalytics();
+        } catch {}
+        window.addEventListener('phl-consent-updated', (event) => {
+          if (event.detail?.analytics === true) loadAnalytics();
+        });
+      })();
+    </script>
+  </head>
+  <body>
+    <header class="fixed inset-x-0 top-0 z-40 border-b border-white/10 bg-[#03090e]/82 backdrop-blur-xl">
+      <div class="container-shell flex h-18 items-center justify-between gap-5">
+        <Logo />
+        <nav class="hidden items-center gap-6 text-sm text-slate-300 md:flex" aria-label="Navegação principal">
+          <a href="/#historia" class="hover:text-white">História</a>
+          <a href="/#visita" class="hover:text-white">Visita</a>
+          <a href="/#entorno" class="hover:text-white">Entorno</a>
+          <a href="/#faq" class="hover:text-white">FAQ</a>
+        </nav>
+        <a href="https://maps.app.goo.gl/NTxFSZTyTbenYDZo6" target="_blank" rel="noopener noreferrer" class="rounded-full border border-[#d68b46]/70 px-4 py-2 text-xs font-semibold tracking-wide text-[#f0c494] transition hover:bg-[#d68b46] hover:text-[#07141d]">Abrir no mapa</a>
+      </div>
+    </header>
+    <main><slot /></main>
+    <Footer />
+  </body>
+</html>

@@ -1,0 +1,46 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout title="Configurações de Cookies | Guia Ponte Hercílio Luz" description="Gerencie as preferências de cookies do Guia Ponte Hercílio Luz." path="/cookies/">
+  <section class="container-shell pt-36 pb-24">
+    <p class="eyebrow">Controle de privacidade</p>
+    <h1 class="mt-4 font-[Georgia] text-5xl text-white md:text-7xl">Configurações de Cookies</h1>
+    <p class="mt-4 text-sm text-slate-500">Última atualização: setembro de 2026</p>
+    <div class="prose-legal mt-10 max-w-3xl"><p>Use os controles abaixo para definir suas preferências. Cookies estritamente necessários não podem ser desativados porque guardam a própria escolha de consentimento e suportam funções básicas do site.</p></div>
+    <form id="cookie-form" class="mt-10 max-w-3xl space-y-4">
+      <div class="panel flex items-start justify-between gap-6 rounded-3xl p-6"><div><h2 class="!m-0 text-lg font-semibold text-white">Cookies necessários</h2><p class="mt-2 text-sm leading-6 text-slate-400">Armazenam a preferência de consentimento e são essenciais para o funcionamento básico.</p></div><span class="rounded-full bg-emerald-400/15 px-3 py-1 text-xs font-bold text-emerald-300">Sempre ativos</span></div>
+      <label class="panel flex cursor-pointer items-start justify-between gap-6 rounded-3xl p-6"><div><span class="text-lg font-semibold text-white">Cookies de análise</span><p class="mt-2 text-sm leading-6 text-slate-400">Google Analytics 4 (G-HXM22WWPKP). Ajuda a compreender, de forma agregada, como o site é utilizado.</p></div><input id="analytics" type="checkbox" class="mt-1 h-5 w-5 accent-[#d68b46]" /></label>
+      <label class="panel flex cursor-pointer items-start justify-between gap-6 rounded-3xl p-6"><div><span class="text-lg font-semibold text-white">Cookies de preferência</span><p class="mt-2 text-sm leading-6 text-slate-400">Lembram configurações do site. No momento, este guia utiliza apenas a preferência de consentimento.</p></div><input id="preferences" type="checkbox" class="mt-1 h-5 w-5 accent-[#d68b46]" /></label>
+      <label class="panel flex cursor-pointer items-start justify-between gap-6 rounded-3xl p-6"><div><span class="text-lg font-semibold text-white">Cookies de marketing</span><p class="mt-2 text-sm leading-6 text-slate-400">Nenhum fornecedor de publicidade personalizada está configurado neste projeto. O controle permanece desativado por padrão.</p></div><input id="marketing" type="checkbox" disabled class="mt-1 h-5 w-5 opacity-40" /></label>
+      <div class="flex flex-wrap gap-3 pt-4"><button type="submit" class="rounded-full bg-[#d68b46] px-6 py-3 text-sm font-bold text-[#07141d]">Salvar preferências</button><button id="reject" type="button" class="rounded-full border border-white/20 px-6 py-3 text-sm font-bold text-white">Rejeitar opcionais</button></div>
+      <p id="cookie-status" class="min-h-6 text-sm text-emerald-300" role="status" aria-live="polite"></p>
+    </form>
+    <script>
+      const KEY = 'phl-cookie-preferences';
+      const form = document.querySelector<HTMLFormElement>('#cookie-form');
+      const analytics = document.querySelector<HTMLInputElement>('#analytics');
+      const preferences = document.querySelector<HTMLInputElement>('#preferences');
+      const status = document.querySelector<HTMLElement>('#cookie-status');
+      const reject = document.querySelector<HTMLButtonElement>('#reject');
+      type CookiePreferences = { necessary: true; analytics: boolean; preferences: boolean; marketing: false };
+      const read = (): CookiePreferences | null => { try { return JSON.parse(localStorage.getItem(KEY) || 'null') as CookiePreferences | null; } catch { return null; } };
+      const saved = read();
+      if (saved && analytics && preferences) { analytics.checked = saved.analytics === true; preferences.checked = saved.preferences === true; }
+      const save = (value: CookiePreferences) => {
+        localStorage.setItem(KEY, JSON.stringify(value));
+        document.cookie = 'phl_consent=1; Max-Age=31536000; Path=/; SameSite=Lax';
+        window.dispatchEvent(new CustomEvent('phl-consent-updated', { detail: value }));
+        if (status) status.textContent = 'Preferências salvas neste navegador.';
+      };
+      form?.addEventListener('submit', (event) => {
+        event.preventDefault();
+        save({ necessary: true, analytics: analytics?.checked === true, preferences: preferences?.checked === true, marketing: false });
+      });
+      reject?.addEventListener('click', () => {
+        if (analytics) analytics.checked = false;
+        if (preferences) preferences.checked = false;
+        save({ necessary: true, analytics: false, preferences: false, marketing: false });
+      });
+    </script>
+  </section>
+</BaseLayout>

@@ -1,0 +1,14 @@
+---
+interface Props { compact?: boolean; class?: string; }
+const { compact = false, class: className = '' } = Astro.props;
+---
+<a href="/" class={`inline-flex items-center gap-3 no-underline ${className}`} aria-label="Guia Ponte Hercílio Luz — início">
+  <svg viewBox="0 0 88 48" class="h-10 w-auto" aria-hidden="true">
+    <path d="M6 37h76" stroke="#D68B46" stroke-width="2"/>
+    <path d="M18 36V16M70 36V16" stroke="#F4EFE6" stroke-width="2.4"/>
+    <path d="M18 16c14 1 17 14 26 14S56 17 70 16" fill="none" stroke="#D68B46" stroke-width="2"/>
+    <path d="M18 16c4 9 8 15 13 20M70 16c-4 9-8 15-13 20M31 36h26" fill="none" stroke="#F4EFE6" stroke-width="1.4"/>
+    <circle cx="44" cy="30" r="2" fill="#D68B46"/>
+  </svg>
+  {!compact && <span class="leading-none"><strong class="block text-[15px] tracking-[.12em] text-white">HERCÍLIO LUZ</strong><span class="mt-1 block text-[10px] tracking-[.24em] text-[#d8b089]">GUIA INDEPENDENTE</span></span>}
+</a>
