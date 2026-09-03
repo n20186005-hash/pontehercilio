@@ -1,27 +1,103 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import WeatherSection from '../components/WeatherSection.astro';
 
+// ---- Fatos rápidos (faixa sob o herói) ----
 const facts = [
   ['821 m', 'extensão aproximada'],
   ['339,5 m', 'vão central pênsil'],
   ['1926', 'ano de inauguração'],
   ['2019', 'reabertura após restauração'],
 ];
+
+// ---- Linha do tempo (História) ----
+const timeline = [
+  ['1922', '14 de novembro: início das obras da travessia entre ilha e continente.'],
+  ['1924', 'Morte do governador Hercílio Luz, idealizador do projeto, dois anos antes da inauguração.'],
+  ['1926', '13 de maio: inauguração. Até 1935, a travessia chegou a ser cobrada (1 tostão).'],
+  ['1969', 'O tabuleiro original de madeira recebe revestimento asfáltico, aumentando o peso da estrutura.'],
+  ['1975', 'Inauguração da Ponte Colombo Salles encerra o período em que a Hercílio Luz era a única ligação rodoviária.'],
+  ['1982', 'Primeira interdição total para veículos, após fissuras detectadas nas barras de olhal em 1981.'],
+  ['1988', 'Reabertura parcial: pedestres, ciclistas e motociclistas voltam a cruzar.'],
+  ['1991', 'Nova interdição; o asfalto é removido para aliviar o peso sobre a estrutura centenária.'],
+  ['1998', 'Tombamento federal pelo Iphan, somando-se às proteções municipal (1992) e estadual (1997).'],
+  ['2019', '30 de dezembro: reabertura completa após a grande restauração.'],
+  ['2024', 'Entra em operação a iluminação cênica que valoriza a ponte à noite.'],
+  ['2026', 'Centenário da travessia: 100 anos como símbolo de Florianópolis e de Santa Catarina.'],
+];
+
+// ---- Números técnicos (Engenharia) ----
+const stats = [
+  ['821 m', 'extensão total da ponte'],
+  ['339,5 m', 'vão central pênsil'],
+  ['74 m', 'altura das torres'],
+  ['30,8 m', 'altura média do tabuleiro sobre o mar'],
+  ['≈ 5.000 t', 'peso da estrutura de aço'],
+  ['14.250 m³', 'concreto em fundações e pilares'],
+  ['4.000 tf', 'capacidade das correntes de barras de olhal'],
+  ['1926 · 2019', 'inauguração · reabertura após restauro'],
+];
+
+// ---- Roteiro sugerido (Visita) ----
+const roteiro = [
+  'Comece pelo Centro Histórico: Mercado Público, Largo da Alfândega e Praça XV ajudam a entender a cidade que a ponte ligou ao continente.',
+  'Suba a Rua Felipe Schmidt em direção à baía e entre no Parque da Luz, na cabeceira insular.',
+  'Do mirante do parque, aproveite o enquadramento frontal da ponte para fotografar torres e vão pênsil.',
+  'Atravesse a pé (ou de bicicleta), observando as correntes de barras de olhal e a estrutura acima da água.',
+  'No lado continental, o entorno do Forte Santana e a orla oferecem o pôr do sol com a silhueta da ponte ao fundo. Retorne antes de escurecer, se quiser ver a iluminação cênica ligar.',
+];
+
+// ---- Serviços e infraestrutura no entorno (neutro, sem indicação comercial) ----
+const facilities = [
+  ['Banheiros públicos', 'Banheiros', 'Não há sanitários fixos ao longo da passarela. Use os banheiros de equipamentos públicos do Centro, do Mercado Público e de estabelecimentos comerciais antes de atravessar — e planeje também o retorno.'],
+  ['Estacionamento', 'Estacionamento', 'Vagas na rua são escassas e disputadas no entorno imediato. Prefira estacionamentos privados rotativos do Centro e da orla, a 5–10 minutos a pé da cabeceira insular.'],
+  ['Alimentação', 'Restaurantes', 'No Centro você encontra cozinha brasileira e frutos do mar, parrillas e churrascarias, restaurantes com vista para a baía e opções de refeição rápida. Verifique horários e reservas diretamente com cada casa.'],
+  ['Café e lanches', 'Cafés e padarias', 'Cafeterias, padarias e confeitarias ao redor do Centro são boas paradas para café, lanche e doces regionais antes ou depois da travessia.'],
+  ['Compras', 'Mercados e conveniência', 'Mercados de bairro, minimercados e lojas de conveniência no Centro vendem água, lanches e itens de uso imediato. No Mercado Público, encontram-se produtos locais e artesanato.'],
+  ['Onde dormir', 'Hospedagem', 'Hotéis do Centro concentram-se perto dos principais pontos turísticos; pousadas na ilha e no continente ampliam as opções. Em alta temporada, reserve com antecedência.'],
+  ['Abastecimento', 'Combustível e recarga', 'Postos de combustível ficam nas avenidas de acesso ao Centro e no lado continental (Estreito). Pontos de recarga para veículos elétricos estão em postos e shoppings do município.'],
+  ['Saúde', 'Farmácia e emergência', 'Farmácias no Centro funcionam em horário comercial e em regime de plantão. Em emergências, acione o SAMU (192) ou o Corpo de Bombeiros (193) e siga a orientação do serviço público mais próximo.'],
+  ['Pagamento', 'Dinheiro e cartões', 'Agências bancárias e caixas eletrônicos existem no Centro; cartões são amplamente aceitos, mas leve dinheiro trocado para pequenos comércios e estacionamentos rotativos.'],
+  ['Como se deslocar', 'Transporte público', 'Ônibus urbanos com integração ao terminal TICEN, táxis e aplicativos de mobilidade conectam o Centro aos bairros da ilha e ao continente. A pé, tudo fica a poucos minutos da cabeceira.'],
+];
+
+// ---- Histórias e curiosidades ----
+const stories = [
+  ['Memória', 'Uma ponte com nome de governador', 'Idealizada por Hercílio Luz, o "pai das estradas" de Santa Catarina, a travessia foi viabilizada durante seu governo. Ele morreu em 1924, sem ver a obra pronta — e a ponte recebeu seu nome em homenagem.'],
+  ['Curiosidade', 'O pedágio de 1 tostão', 'Entre 1926 e 1935, atravessar a ponte custava 1 tostão (100 réis). O pedágio ajudava a pagar o financiamento obtido nos Estados Unidos, quitado somente em 1978.'],
+  ['Engenharia', 'A maior ponte pênsil do Brasil', 'Com 339,5 m de vão central e correntes de barras de olhal, é a maior ponte pênsil do país e um dos maiores exemplos vivos de ponte suspensa por barras de olhal ainda em uso no mundo.'],
+  ['Alerta', 'A lição da Silver Bridge', 'Erguida pela mesma construtora da Silver Bridge americana — que desabou em 1967 causando 46 mortes —, a Hercílio Luz passou a ser monitorada de perto. Fissuras nas barras detectadas em 1981 levaram à interdição de 1982.'],
+  ['Restauração', 'A ponte que "andou" alguns centímetros', 'Durante o restauro, em 2017, dezenas de macacos hidráulicos ergueram o vão pênsil em etapas para permitir a troca de componentes da cadeia de suspensão — uma operação delicada e rara em pontes desse tipo.'],
+  ['Símbolo', 'A imagem mais citada do estado', 'Pesquisas de opinião apontam a ponte como o símbolo mais lembrado de Florianópolis — muitas vezes citado até antes das praias catarinenses. Ela estampa camisas de clubes, marcas, novelas e o imaginário de quem chega à ilha.'],
+];
+
 const faq = [
   { q: 'A Ponte Hercílio Luz é paga?', a: 'Não há cobrança de ingresso para caminhar e apreciar a ponte como espaço público. Serviços privados no entorno, estacionamento e transporte têm tarifas próprias.' },
   { q: 'Qual é o melhor horário para visitar?', a: 'O fim da tarde combina luz favorável para fotografia com a transição para a iluminação cênica. Em fins de semana e feriados, a experiência costuma ser mais voltada a pedestres e ciclistas, mas alterações temporárias podem ocorrer.' },
   { q: 'Quanto tempo reservar?', a: 'Para atravessar com calma, fotografar e visitar o Parque da Luz, reserve aproximadamente 1 a 2 horas. Um roteiro com Mercado Público e Centro Histórico pode ocupar meio período.' },
   { q: 'É possível atravessar de bicicleta?', a: 'Sim, há circulação de ciclistas, sujeita à sinalização e a eventuais restrições operacionais em eventos ou manutenção.' },
   { q: 'Carros podem passar pela ponte?', a: 'Nos dias úteis há circulação veicular conforme as regras operacionais vigentes. Fins de semana e feriados tradicionalmente privilegiam pedestres e ciclistas. Consulte avisos do Governo de Santa Catarina antes da viagem, pois eventos e manutenção podem alterar o fluxo.' },
-  { q: 'Onde conseguir as melhores fotos?', a: 'O Parque da Luz e o mirante da cabeceira insular oferecem enquadramentos frontais; a orla e o entorno do Forte Santana ajudam a registrar a estrutura por baixo e em perspectiva lateral.' },
+  { q: 'Há banheiros públicos na ponte?', a: 'Não existem sanitários fixos ao longo da passarela. Planeje o trajeto usando os banheiros de equipamentos e estabelecimentos do Centro (como o Mercado Público e centros comerciais) antes de atravessar.' },
+  { q: 'A visita é acessível para pessoas com mobilidade reduzida?', a: 'A travessia é longa, plana na maior parte do percurso e exposta ao sol e ao vento. Os acessos seguem padrões urbanos, mas convém avaliar o percurso e as condições do dia e consultar os canais oficiais para orientação específica.' },
+  { q: 'Posso levar meu animal de estimação?', a: 'Espaços públicos do entorno costumam aceitar animais guiados por coleira. Como a passarela é exposta, leve água, proteja as patas do piso quente e respeite a sinalização; regras operacionais podem mudar, então confira os avisos oficiais.' },
+  { q: 'É permitido usar drone para fotografar?', a: 'A operação de drones em área urbana e sobre bem tombado exige autorização dos órgãos competentes (ANAC, DECEA e restrições locais/federais). Este guia não recomenda voos sem licença e não fornece instruções de operação.' },
+  { q: 'A ponte fica iluminada à noite?', a: 'Desde o fim de 2024, a iluminação cênica valoriza a estrutura durante a noite e costuma ser o ponto alto da vista depois do pôr do sol. Confirme o funcionamento no dia da visita, pois manutenções eventuais podem apagar o espetáculo.' },
+  { q: 'Qual é a melhor época do ano?', a: 'Florianópolis tem clima subtropical: verões quentes com chuvas frequentes e invernos amenos. Primavera e outono costumam reunir temperaturas agradáveis; consulte a seção Clima e prefira dias secos para atravessar a pé.' },
+  { q: 'Onde conseguir as melhores fotos?', a: 'O Parque da Luz e o mirante da cabeceira insular oferecem enquadramentos frontais; a orla e o entorno do Forte Santana ajudam a registrar a estrutura por baixo e em perspectiva lateral. Ao entardecer, a luz dourada valoriza o aço oxidado.' },
 ];
+
+const MAPS_URL = 'https://maps.app.goo.gl/NTxFSZTyTbenYDZo6';
+const siteOrigin = Astro.site ? Astro.site.toString().replace(/\/$/, '') : '';
 
 const attractionSchema = {
   '@context': 'https://schema.org',
   '@type': 'TouristAttraction',
+  '@id': `${siteOrigin}/#attraction`,
   name: 'Ponte Hercílio Luz',
-  alternateName: 'Ponte pênsil Hercílio Luz',
-  description: 'Ponte pênsil histórica de Florianópolis, símbolo de Santa Catarina e patrimônio cultural brasileiro.',
+  alternateName: ['Ponte pênsil Hercílio Luz', 'Ponte Hercílio Luz de Florianópolis'],
+  description: 'Ponte pênsil histórica no Centro de Florianópolis, em Santa Catarina (Brasil): símbolo do estado, patrimônio cultural brasileiro e um dos maiores exemplos de ponte suspensa por barras de olhal ainda em uso no mundo.',
+  url: `${siteOrigin}/`,
+  image: [`${siteOrigin}/images/ponte-hercilio-luz-hero.jpg`],
   address: {
     '@type': 'PostalAddress',
     streetAddress: 'Ponte pênsil - Centro',
@@ -31,51 +107,89 @@ const attractionSchema = {
     addressCountry: 'BR'
   },
   geo: { '@type': 'GeoCoordinates', latitude: -27.593811676247984, longitude: -48.56768502278584 },
+  hasMap: MAPS_URL,
   openingHours: 'Acesso para visitação e travessia de pedestres sujeito às regras operacionais e a interdições temporárias; consulte os canais oficiais antes da visita.',
   aggregateRating: { '@type': 'AggregateRating', ratingValue: '4.8', reviewCount: '24497', bestRating: '5' },
   isAccessibleForFree: true,
   sameAs: [
     'https://www.gov.br/iphan/pt-br/assuntos/noticias/ponte-hercilio-luz-chega-aos-100-anos-como-simbolo-de-santa-catarina',
     'https://www.sc.gov.br/vivaaponte/',
-    'https://redeplanejamento.pmf.sc.gov.br/pt-BR/projetos/ponte-viva'
-  ],
-  ...(Astro.site ? { url: new URL('/', Astro.site).toString(), image: new URL('/images/ponte-hercilio-luz-hero.jpg', Astro.site).toString() } : {})
+    'https://redeplanejamento.pmf.sc.gov.br/pt-BR/projetos/ponte-viva',
+    'https://www.santur.sc.gov.br/',
+    MAPS_URL
+  ]
 };
 const faqSchema = {
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
-  mainEntity: faq.map(({q, a}) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } }))
+  mainEntity: faq.map(({ q, a }) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } }))
 };
 ---
+
 <BaseLayout
-  title="Ponte Hercílio Luz | História, visita e guia de Florianópolis"
-  description="Guia independente em português sobre a Ponte Hercílio Luz, em Florianópolis: história, acesso, melhores horários, estacionamento, transporte, gastronomia e atrações próximas."
+  title="Ponte Hercílio Luz (Florianópolis) | História, Visita e Guia"
+  description="Guia independente em português sobre a Ponte Hercílio Luz, em Florianópolis: história centenária, engenharia, clima em tempo real, acesso, estacionamento, gastronomia, serviços e atrações próximas."
   path="/"
   schema={[attractionSchema, faqSchema]}
 >
+
+  <!-- HERO -->
   <section class="relative min-h-[92vh] overflow-hidden pt-18">
-    <img src="/images/ponte-hercilio-luz-hero.jpg" alt="Ponte Hercílio Luz iluminada sobre a baía em Florianópolis" class="absolute inset-0 h-full w-full object-cover" width="1600" height="1000" fetchpriority="high" />
+    <img src="/images/ponte-hercilio-luz-hero.jpg" alt="Ponte Hercílio Luz iluminada sobre a baía em Florianópolis" class="absolute inset-0 h-full w-full object-cover" width="1920" height="1200" decoding="async" />
     <div class="absolute inset-0 bg-[linear-gradient(90deg,rgba(2,8,13,.96)_0%,rgba(2,8,13,.72)_42%,rgba(2,8,13,.2)_75%),linear-gradient(0deg,#02080d_0%,transparent_45%)]"></div>
     <div class="absolute inset-0 grid-lines opacity-40"></div>
     <div class="container-shell relative flex min-h-[calc(92vh-4.5rem)] items-end pb-18 pt-24 lg:items-center lg:pb-12">
       <div class="max-w-3xl">
-        <p class="eyebrow">Florianópolis · Santa Catarina · Brasil</p>
-        <h1 class="mt-5 font-[Georgia] text-[clamp(3.4rem,9vw,7.8rem)] leading-[.82] tracking-[-.06em] text-white">Ponte<br/><span class="text-[#dfa164]">Hercílio Luz</span></h1>
+        <h1 class="mt-5 font-[Georgia] text-[clamp(3.4rem,9vw,7.8rem)] leading-[.82] tracking-[-.06em] text-white">Ponte<br/><span class="text-[#dfa164]">Hercílio Luz</span><span class="mt-7 block font-sans text-xs font-bold uppercase leading-none tracking-[.34em] text-[#e3a86f] md:text-sm">Florianópolis · Santa Catarina · Brasil</span></h1>
         <p class="mt-7 max-w-2xl text-lg leading-8 text-slate-200 md:text-xl">Uma travessia de aço entre ilha e continente — patrimônio, engenharia e memória urbana no cartão-postal mais reconhecível de Florianópolis.</p>
+        <div class="mt-6 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-slate-200">
+          <span class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-black/25 px-4 py-1.5"><span aria-hidden="true" class="text-[#f0b26b]">★</span><strong class="text-white">4,8</strong><span aria-hidden="true">·</span><span>24.497 avaliações no Google Maps</span></span>
+          <span class="inline-flex items-center rounded-full border border-white/15 bg-black/25 px-4 py-1.5 text-xs uppercase tracking-[.14em]">Acesso público e gratuito</span>
+        </div>
         <div class="mt-8 flex flex-wrap items-center gap-3">
           <a href="#visita" class="rounded-full bg-[#d68b46] px-6 py-3 text-sm font-bold text-[#07141d] no-underline hover:bg-[#e6a66c]">Planejar a visita</a>
-          <span class="rounded-full border border-white/20 bg-black/20 px-4 py-3 text-sm text-white"><strong>4,8</strong> · 24.497 avaliações informadas</span>
+          <a href="#clima" class="rounded-full border border-white/20 bg-black/20 px-6 py-3 text-sm font-bold text-white no-underline hover:border-[#d68b46] hover:text-[#efbd8d]">Ver clima e previsão</a>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- FAIXA DE NÚMEROS -->
   <section class="border-y border-white/10 bg-[#081721] py-8">
     <div class="container-shell grid grid-cols-2 gap-7 md:grid-cols-4">
       {facts.map(([number, label]) => <div><div class="font-[Georgia] text-3xl text-white md:text-4xl">{number}</div><div class="mt-1 text-xs uppercase tracking-[.14em] text-slate-400">{label}</div></div>)}
     </div>
   </section>
 
+  <!-- VISÃO GERAL / SOBRE (semântica geográfica do ponto turístico) -->
+  <section id="sobre" class="border-b border-white/10 bg-[#07141d] py-20">
+    <div class="container-shell grid gap-10 lg:grid-cols-[1.1fr_.9fr] lg:items-center">
+      <div>
+        <nav aria-label="Rastro geográfico" class="text-xs font-medium uppercase tracking-[.16em] text-slate-500">
+          <ol class="flex flex-wrap items-center gap-x-2 gap-y-1">
+            <li>Ponte Hercílio Luz</li>
+            <li aria-hidden="true">/</li>
+            <li>Florianópolis</li>
+            <li aria-hidden="true">/</li>
+            <li>Santa Catarina</li>
+            <li aria-hidden="true">/</li>
+            <li>Brasil</li>
+          </ol>
+        </nav>
+        <h2 class="mt-6 font-[Georgia] text-4xl leading-tight text-white md:text-5xl">Sobre a Ponte Hercílio Luz, em Florianópolis</h2>
+        <p class="mt-6 leading-8 text-slate-300">A <strong class="text-white">Ponte Hercílio Luz</strong> — também conhecida como <strong class="text-white">Ponte pênsil Hercílio Luz</strong> — é a ponte pênsil mais famosa do Brasil e liga a Ilha de Santa Catarina ao continente no <strong class="text-white">Centro de Florianópolis</strong>, capital de <strong class="text-white">Santa Catarina</strong>, no sul do <strong class="text-white">Brasil</strong>. Inaugurada em 1926, é patrimônio cultural tombado nas esferas municipal, estadual e federal.</p>
+        <p class="mt-5 leading-8 text-slate-400">Quem visita a ponte encontra, a poucos minutos a pé, os principais marcos do Centro Histórico — como a <strong class="text-white">Praça XV de Novembro</strong> e o <strong class="text-white">Mercado Público</strong> — além do <strong class="text-white">Parque da Luz</strong>, na cabeceira insular, e do <strong class="text-white">Forte Santana</strong>, na orla do lado continental.</p>
+      </div>
+      <dl class="grid gap-4 sm:grid-cols-2">
+        <div class="rounded-2xl border border-white/10 bg-black/15 p-5"><dt class="text-[11px] font-bold uppercase tracking-[.16em] text-slate-500">Avaliação no Google</dt><dd class="mt-2 text-lg text-white">4,8 <span aria-hidden="true" class="text-[#f0b26b]">★</span> <span class="text-sm text-slate-400">(24.497)</span></dd></div>
+        <div class="rounded-2xl border border-white/10 bg-black/15 p-5"><dt class="text-[11px] font-bold uppercase tracking-[.16em] text-slate-500">Acesso</dt><dd class="mt-2 text-lg text-white">Público e gratuito</dd></div>
+        <div class="rounded-2xl border border-white/10 bg-black/15 p-5"><dt class="text-[11px] font-bold uppercase tracking-[.16em] text-slate-500">Endereço</dt><dd class="mt-2 text-base leading-6 text-slate-300">Ponte pênsil – Centro, Florianópolis – SC, 88010-400, Brasil</dd></div>
+        <div class="rounded-2xl border border-white/10 bg-black/15 p-5"><dt class="text-[11px] font-bold uppercase tracking-[.16em] text-slate-500">Categoria</dt><dd class="mt-2 text-lg text-white">Ponte pênsil · patrimônio</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- HISTÓRIA -->
   <section id="historia" class="relative overflow-hidden py-24">
     <div class="container-shell grid gap-12 lg:grid-cols-[.9fr_1.1fr] lg:items-center">
       <div>
@@ -83,6 +197,8 @@ const faqSchema = {
         <h2 class="mt-4 font-[Georgia] text-4xl leading-tight text-white md:text-6xl">A ponte que mudou a escala da capital catarinense.</h2>
         <p class="mt-7 text-base leading-8 text-slate-300">A construção começou em 1922 e a inauguração ocorreu em 13 de maio de 1926. A ligação permanente substituiu a dependência das travessias por embarcação e reorganizou a relação entre a Ilha de Santa Catarina e o continente.</p>
         <p class="mt-5 text-base leading-8 text-slate-300">Depois de longos períodos de interdição e uma restauração estrutural complexa, a ponte foi reaberta em dezembro de 2019. Em 2026, completou cem anos como patrimônio cultural e peça viva da mobilidade e da paisagem de Florianópolis.</p>
+        <p class="mt-5 text-base leading-8 text-slate-300">Entre 1926 e 1975, ela foi a única ligação rodoviária entre a ilha e o continente — e hoje segue sendo a mais famosa. Sua história mistura política, engenharia e resiliência: idealizada durante o governo de Hercílio Luz, atravessou crises, interdições e uma restauração que a devolveu à cidade cem anos depois do início das obras.</p>
+        <p class="mt-5 text-base leading-8 text-slate-300">A travessia chegou a ser cobrada entre 1926 e 1935, e o financiamento americano usado na construção só foi totalmente quitado em 1978. Reconhecida como patrimônio em três esferas — municipal (1992), estadual (1997) e federal, pelo Iphan (1998) —, a ponte é um dos monumentos mais protegidos e mais queridos do estado.</p>
         <div class="mt-8 flex flex-wrap gap-3 text-sm">
           <a href="https://www.gov.br/iphan/pt-br/assuntos/noticias/ponte-hercilio-luz-chega-aos-100-anos-como-simbolo-de-santa-catarina" target="_blank" rel="noopener noreferrer" class="rounded-full border border-white/15 px-4 py-2 text-slate-200 hover:border-[#d68b46]">Iphan · centenário ↗</a>
           <a href="https://redeplanejamento.pmf.sc.gov.br/pt-BR/projetos/ponte-viva" target="_blank" rel="noopener noreferrer" class="rounded-full border border-white/15 px-4 py-2 text-slate-200 hover:border-[#d68b46]">Prefeitura · Ponte Viva ↗</a>
@@ -90,12 +206,50 @@ const faqSchema = {
         </div>
       </div>
       <figure class="panel overflow-hidden rounded-[2rem]">
-        <img src="/images/ponte-hercilio-luz-estrutura.jpg" alt="Estrutura metálica e torres da Ponte Hercílio Luz" class="aspect-[4/3] w-full object-cover" width="1200" height="900" loading="lazy" />
+        <img src="/images/ponte-hercilio-luz-estrutura.jpg" alt="Estrutura metálica e torres da Ponte Hercílio Luz" class="aspect-[4/3] w-full object-cover" width="1600" height="1200" loading="lazy" decoding="async" />
         <figcaption class="border-t border-white/10 px-6 py-4 text-xs leading-5 text-slate-400">Torres, treliças e barras de olhal formam a linguagem estrutural que faz da ponte uma obra singular da engenharia do início do século XX.</figcaption>
       </figure>
     </div>
+    <div class="container-shell">
+      <p class="eyebrow mt-20">Linha do tempo</p>
+      <h3 class="mt-3 font-[Georgia] text-3xl text-white md:text-4xl">Do projeto ao centenário</h3>
+      <ol class="mt-9 grid gap-x-10 gap-y-6 sm:grid-cols-2 lg:grid-cols-3">
+        {timeline.map(([year, text]) => (
+          <li class="relative border-l border-white/10 pl-5">
+            <span class="absolute -left-1 top-1.5 h-2.5 w-2.5 rounded-full bg-[#d68b46]"></span>
+            <div class="font-[Georgia] text-xl text-[#e3a86f]">{year}</div>
+            <p class="mt-1 text-sm leading-6 text-slate-400">{text}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
   </section>
 
+  <!-- ENGENHARIA -->
+  <section id="engenharia" class="border-y border-white/10 bg-[#0b1d29] py-24">
+    <div class="container-shell grid gap-12 lg:grid-cols-[.85fr_1.15fr]">
+      <div>
+        <p class="eyebrow">Engenharia e restauro</p>
+        <h2 class="mt-4 font-[Georgia] text-4xl leading-tight text-white md:text-6xl">Como uma ponte de barras de olhal atravessou um século</h2>
+        <p class="mt-7 text-base leading-8 text-slate-300">Encomendada no início da década de 1920, a obra foi projetada pela firma americana <strong class="text-white">Robinson &amp; Steinman</strong> — com participação de David B. Steinman — e erguida pela American Bridge Company, com aço e componentes trazidos dos Estados Unidos. As obras começaram em 14 de novembro de 1922 e a inauguração ocorreu em 13 de maio de 1926.</p>
+        <p class="mt-5 text-base leading-8 text-slate-300">Ao contrário dos cabos de aço comuns nas pontes pênsiles atuais, a Hercílio Luz é sustentada por <strong class="text-white">cadeias de barras de olhal</strong> (eye-bars) que atravessam torres de cerca de 74 m e distribuem o peso do vão central de 339,5 m. Com cerca de 5.000 toneladas de aço, é a maior ponte pênsil do Brasil e um dos maiores exemplos de ponte suspensa por barras de olhal ainda em uso no mundo.</p>
+        <p class="mt-5 text-base leading-8 text-slate-300">A estrutura envelheceu e exigiu decisões difíceis. Após fissuras detectadas em 1981, a ponte foi interditada para veículos em 1982, reaberta parcialmente a pedestres e ciclistas em 1988 e fechada novamente em 1991, quando o asfalto foi removido para aliviar peso. No grande restauro concluído em 2019, o tabuleiro ganhou grelha metálica, a cadeia de suspensão foi renovada e o vão chegou a ser erguido com macacos hidráulicos para a troca de componentes — um trabalho de precisão centimétrica sobre uma obra tombada.</p>
+      </div>
+      <div>
+        <div class="grid gap-4 sm:grid-cols-2">
+          {stats.map(([number, label]) => (
+            <div class="rounded-3xl border border-white/10 bg-black/15 p-6">
+              <div class="font-[Georgia] text-3xl leading-none text-[#e3a86f]">{number}</div>
+              <p class="mt-3 text-xs uppercase leading-5 tracking-[.14em] text-slate-400">{label}</p>
+            </div>
+          ))}
+        </div>
+        <p class="mt-5 rounded-2xl border border-[#d68b46]/25 bg-[#d68b46]/5 px-5 py-4 text-xs leading-6 text-slate-300">Números aproximados, baseados em registros técnicos públicos. Para dados oficiais e avisos de operação, consulte as fontes indicadas ao longo da página e os canais do governo de Santa Catarina.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- O QUE OBSERVAR -->
   <section class="bg-[#07141d] py-24">
     <div class="container-shell">
       <div class="max-w-3xl">
@@ -104,12 +258,13 @@ const faqSchema = {
       </div>
       <div class="mt-10 grid gap-4 md:grid-cols-3">
         <article class="panel rounded-3xl p-7"><div class="text-5xl text-[#d68b46]">01</div><h3 class="mt-5 text-xl font-semibold text-white">O vão pênsil</h3><p class="mt-3 leading-7 text-slate-400">O trecho central suspenso se estende por cerca de 339,5 m. Observe a curva das correntes e a repetição das barras verticais sobre a água.</p></article>
-        <article class="panel rounded-3xl p-7"><div class="text-5xl text-[#d68b46]">02</div><h3 class="mt-5 text-xl font-semibold text-white">As torres</h3><p class="mt-3 leading-7 text-slate-400">As torres principais atingem aproximadamente 75 m a partir do nível do mar e organizam a silhueta que define o horizonte da baía.</p></article>
+        <article class="panel rounded-3xl p-7"><div class="text-5xl text-[#d68b46]">02</div><h3 class="mt-5 text-xl font-semibold text-white">As torres</h3><p class="mt-3 leading-7 text-slate-400">As torres principais elevam-se cerca de 74 m a partir do nível do mar e organizam a silhueta que define o horizonte da baía.</p></article>
         <article class="panel rounded-3xl p-7"><div class="text-5xl text-[#d68b46]">03</div><h3 class="mt-5 text-xl font-semibold text-white">A restauração</h3><p class="mt-3 leading-7 text-slate-400">A reabilitação preservou a lógica histórica da estrutura e substituiu componentes críticos, permitindo a reabertura após décadas de interdição.</p></article>
       </div>
     </div>
   </section>
 
+  <!-- VISITA -->
   <section id="visita" class="py-24">
     <div class="container-shell">
       <p class="eyebrow">Informação prática</p>
@@ -120,9 +275,23 @@ const faqSchema = {
         <article class="panel rounded-3xl p-7"><h3 class="text-xl font-semibold text-white">Circulação e horários</h3><p class="mt-3 leading-7 text-slate-400">Pedestres e ciclistas dispõem de passarelas, enquanto o tráfego de veículos segue regras próprias. Fins de semana e feriados costumam priorizar o uso não motorizado. Eventos e manutenção podem alterar o fluxo: verifique avisos oficiais antes de sair.</p></article>
         <article class="panel rounded-3xl p-7"><h3 class="text-xl font-semibold text-white">Acessibilidade e clima</h3><p class="mt-3 leading-7 text-slate-400">A travessia é longa e exposta a vento, sol e chuva. Use calçado confortável e proteção solar. Pessoas com mobilidade reduzida devem avaliar o percurso e as condições dos acessos no dia.</p></article>
       </div>
+
+      <div class="mt-12 rounded-[2rem] border border-white/10 bg-gradient-to-br from-[#0b1d29] to-[#07141d] p-7 md:p-10">
+        <p class="eyebrow">Roteiro sugerido</p>
+        <h3 class="mt-3 font-[Georgia] text-2xl text-white md:text-3xl">Uma tarde em torno da ponte, passo a passo</h3>
+        <ol class="mt-7 grid gap-5 md:grid-cols-2">
+          {roteiro.map((step, i) => (
+            <li class="flex gap-4">
+              <span class="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-[#d68b46]/50 text-sm font-bold text-[#e3a86f]">{i + 1}</span>
+              <p class="text-sm leading-6 text-slate-300">{step}</p>
+            </li>
+          ))}
+        </ol>
+      </div>
     </div>
   </section>
 
+  <!-- TRANSPORTE -->
   <section class="bg-[#e8e1d7] py-24 text-[#07141d]">
     <div class="container-shell grid gap-10 lg:grid-cols-[.85fr_1.15fr]">
       <div>
@@ -139,7 +308,11 @@ const faqSchema = {
     </div>
   </section>
 
-  <section class="py-24">
+  <!-- CLIMA / TEMPO REAL (WeatherSection) -->
+  <WeatherSection />
+
+  <!-- LOCALIZAÇÃO -->
+  <section id="localizacao" class="py-24">
     <div class="container-shell grid gap-10 lg:grid-cols-2 lg:items-center">
       <div class="map-frame h-[520px] overflow-hidden rounded-[2rem] border border-white/10 bg-[#0b1d29]">
         <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6289.275484598642!2d-48.56768502278584!3d-27.593811676247984!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x952737f3a902cdc7%3A0x1aa7dec706ee183a!2sPonte%20Herc%C3%ADlio%20Luz!5e1!3m2!1spt-BR!2sbr!4v1788345404308!5m2!1spt-BR!2sbr" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" title="Mapa da Ponte Hercílio Luz em Florianópolis"></iframe>
@@ -151,24 +324,32 @@ const faqSchema = {
           <div><dt class="text-slate-500">Endereço de referência</dt><dd class="mt-1 text-lg text-white">Ponte pênsil - Centro, Florianópolis - SC, 88010-400, Brasil</dd></div>
           <div><dt class="text-slate-500">Plus Code</dt><dd class="mt-1 text-lg text-white">CC4M+FX Centro, Florianópolis - SC</dd></div>
           <div><dt class="text-slate-500">Coordenadas usadas neste guia</dt><dd class="mt-1 text-lg text-white">-27.5938117, -48.5676850</dd></div>
+          <div><dt class="text-slate-500">Melhor acesso</dt><dd class="mt-1 text-base leading-7 text-slate-300">Pela ilha: Parque da Luz, ao final da Rua Felipe Schmidt. Pelo continente: orla do Estreito, nas proximidades do Forte Santana.</dd></div>
         </dl>
-        <a href="https://maps.app.goo.gl/NTxFSZTyTbenYDZo6" target="_blank" rel="noopener noreferrer" class="mt-8 inline-flex rounded-full bg-white px-5 py-3 text-sm font-bold text-[#07141d] no-underline">Abrir no Google Maps ↗</a>
+        <a href={MAPS_URL} target="_blank" rel="noopener noreferrer" class="mt-8 inline-flex rounded-full bg-white px-5 py-3 text-sm font-bold text-[#07141d] no-underline">Abrir no Google Maps ↗</a>
+        <div class="mt-7 border-t border-white/10 pt-6 text-sm leading-7 text-slate-400">
+          <p class="text-[11px] font-bold uppercase tracking-[.16em] text-slate-500">Portais oficiais</p>
+          <p class="mt-2">Para avisos de operação e turismo regional, consulte o <a class="font-semibold text-[#efbd8d] underline underline-offset-3 hover:text-white" href="https://www.santur.sc.gov.br/" target="_blank" rel="noopener noreferrer">portal de turismo do estado (Santur) ↗</a>, o <a class="font-semibold text-[#efbd8d] underline underline-offset-3 hover:text-white" href="https://www.sc.gov.br/vivaaponte/" target="_blank" rel="noopener noreferrer">Governo de Santa Catarina ↗</a> e a <a class="font-semibold text-[#efbd8d] underline underline-offset-3 hover:text-white" href="https://redeplanejamento.pmf.sc.gov.br/pt-BR/projetos/ponte-viva" target="_blank" rel="noopener noreferrer">Prefeitura de Florianópolis ↗</a>.</p>
+        </div>
       </div>
     </div>
   </section>
 
+  <!-- ESTACIONAMENTO -->
   <section class="bg-[#07141d] py-24">
     <div class="container-shell grid gap-12 lg:grid-cols-[.8fr_1.2fr]">
       <div>
         <p class="eyebrow">Estacionamento</p>
         <h2 class="mt-4 font-[Georgia] text-4xl text-white md:text-5xl">Evite procurar vaga na cabeceira.</h2>
-        <p class="mt-6 leading-8 text-slate-400">O entorno imediato é turístico e urbano, com oferta limitada na rua. Prefira estacionamentos privados no Centro e caminhe os últimos minutos. O Top Market, a cerca de 300 m da ponte, divulga estacionamento rotativo coberto com acesso pela Rua Conselheiro Mafra.</p>
-        <p class="mt-4 text-sm leading-6 text-slate-500">Tarifas e disponibilidade mudam; confirme no estabelecimento antes de estacionar. Este guia não mantém parceria comercial.</p>
+        <p class="mt-6 leading-8 text-slate-400">O entorno imediato é turístico e urbano, com oferta limitada na rua. Prefira estacionamentos privados rotativos no Centro e caminhe os últimos minutos. Na região da Rua Conselheiro Mafra, a poucas centenas de metros da cabeceira insular, há edifícios de estacionamento coberto em operação rotativa.</p>
+        <p class="mt-5 leading-8 text-slate-400">Pelo lado continental, estacionar nas proximidades do Forte Santana e da orla do Estreito também é uma alternativa para começar o passeio com a ponte à frente — verifique as vagas e a sinalização local.</p>
+        <p class="mt-4 text-sm leading-6 text-slate-500">Tarifas e disponibilidade mudam; confirme no estabelecimento antes de estacionar. Este guia não mantém parceria comercial e não recebe indicações pagas.</p>
       </div>
-      <img src="/images/ponte-hercilio-luz-passarela.jpg" alt="Passarela e estrutura da Ponte Hercílio Luz" class="aspect-[16/9] w-full rounded-[2rem] object-cover" width="1200" height="675" loading="lazy" />
+      <img src="/images/ponte-hercilio-luz-passarela.jpg" alt="Passarela e estrutura da Ponte Hercílio Luz" class="aspect-[16/9] w-full rounded-[2rem] object-cover" width="1600" height="900" loading="lazy" decoding="async" />
     </div>
   </section>
 
+  <!-- ENTORNO -->
   <section id="entorno" class="py-24">
     <div class="container-shell">
       <p class="eyebrow">Entorno a pé</p>
@@ -177,44 +358,96 @@ const faqSchema = {
         <article class="panel rounded-3xl p-7"><span class="text-xs uppercase tracking-[.18em] text-[#d68b46]">Vista e parque</span><h3 class="mt-3 text-xl font-semibold text-white">Parque da Luz</h3><p class="mt-3 leading-7 text-slate-400">Área verde na cabeceira insular, com mirantes para a ponte e boa parada para descanso antes ou depois da travessia.</p></article>
         <article class="panel rounded-3xl p-7"><span class="text-xs uppercase tracking-[.18em] text-[#d68b46]">Patrimônio</span><h3 class="mt-3 text-xl font-semibold text-white">Forte Santana do Estreito</h3><p class="mt-3 leading-7 text-slate-400">Fortificação histórica próxima à ponte, restaurada com espaço de contemplação que enquadra a estrutura a partir da orla.</p></article>
         <article class="panel rounded-3xl p-7"><span class="text-xs uppercase tracking-[.18em] text-[#d68b46]">Centro histórico</span><h3 class="mt-3 text-xl font-semibold text-white">Mercado Público</h3><p class="mt-3 leading-7 text-slate-400">Mercado tradicional do Centro, útil para combinar patrimônio urbano, produtos locais e uma pausa gastronômica no mesmo passeio.</p></article>
+        <article class="panel rounded-3xl p-7"><span class="text-xs uppercase tracking-[.18em] text-[#d68b46]">Centro histórico</span><h3 class="mt-3 text-xl font-semibold text-white">Praça XV e Catedral</h3><p class="mt-3 leading-7 text-slate-400">O coração cívico da cidade reúne a Catedral Metropolitana, palácios históricos e a centenária figueira que dá sombra aos encontros locais.</p></article>
+        <article class="panel rounded-3xl p-7"><span class="text-xs uppercase tracking-[.18em] text-[#d68b46]">Centro histórico</span><h3 class="mt-3 text-xl font-semibold text-white">Largo da Alfândega</h3><p class="mt-3 leading-7 text-slate-400">Praça arborizada com feiras de artesanato e casario histórico que preserva a memória portuária e comercial da cidade.</p></article>
+        <article class="panel rounded-3xl p-7"><span class="text-xs uppercase tracking-[.18em] text-[#d68b46]">Orla</span><h3 class="mt-3 text-xl font-semibold text-white">Beira-Mar Norte</h3><p class="mt-3 leading-7 text-slate-400">A avenida à beira da baía é um dos melhores cenários urbanos para ver a ponte em perspectiva ao longo de uma caminhada ou pedalada.</p></article>
       </div>
     </div>
   </section>
 
-  <section class="border-y border-white/10 bg-[#0b1d29] py-24">
+  <!-- SERVIÇOS NO ENTORNO -->
+  <section id="servicos" class="border-y border-white/10 bg-[#081721] py-24">
+    <div class="container-shell">
+      <div class="max-w-3xl">
+        <p class="eyebrow">Infraestrutura do entorno</p>
+        <h2 class="mt-4 font-[Georgia] text-4xl leading-tight text-white md:text-6xl">Tudo o que o visitante costuma procurar por perto</h2>
+        <p class="mt-6 text-base leading-8 text-slate-300">As categorias abaixo descrevem, de forma genérica e neutra, o que existe na região da ponte e do Centro — sem indicar marcas ou estabelecimentos específicos, para manter a imparcialidade deste guia independente.</p>
+      </div>
+      <div class="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        {facilities.map(([label, title, text]) => (
+          <article class="panel rounded-3xl p-6">
+            <span class="text-[11px] font-bold uppercase tracking-[.18em] text-[#d68b46]">{label}</span>
+            <h3 class="mt-3 text-lg font-semibold text-white">{title}</h3>
+            <p class="mt-2 text-sm leading-6 text-slate-400">{text}</p>
+          </article>
+        ))}
+      </div>
+      <p class="mt-6 rounded-2xl border border-white/10 bg-white/[.03] px-5 py-4 text-xs leading-6 text-slate-500">Disponibilidade, horários e valores variam com a estação e o movimento. Confirme diretamente com cada serviço. Este guia é um projeto sem fins lucrativos e não mantém vínculo ou parceria comercial com estabelecimentos citados.</p>
+    </div>
+  </section>
+
+  <!-- GASTRONOMIA -->
+  <section class="bg-[#0b1d29] py-24">
     <div class="container-shell">
       <div class="grid gap-9 lg:grid-cols-[.7fr_1.3fr]">
-        <div><p class="eyebrow">Comer por perto</p><h2 class="mt-4 font-[Georgia] text-4xl text-white md:text-5xl">Gastronomia com a ponte no horizonte</h2><p class="mt-5 leading-7 text-slate-400">As sugestões abaixo são referências de localização e estilo, sem patrocínio. Confira horários e reservas diretamente com cada casa.</p></div>
+        <div><p class="eyebrow">Comer por perto</p><h2 class="mt-4 font-[Georgia] text-4xl text-white md:text-5xl">Gastronomia com a ponte no horizonte</h2><p class="mt-5 leading-7 text-slate-400">O Centro de Florianópolis concentra diferentes atmosferas gastronômicas. As descrições abaixo são referências de localização e estilo — sem patrocínio e sem indicação de marcas. Confira horários e reservas diretamente com cada casa.</p></div>
         <div class="grid gap-4 sm:grid-cols-2">
-          <article class="rounded-3xl border border-white/10 bg-black/15 p-6"><h3 class="text-lg font-semibold text-white">Artesania Choripanes e Parrilla</h3><p class="mt-2 text-sm leading-6 text-slate-400">Parrilla de inspiração pampeana na Rua Felipe Schmidt, perto do Parque da Luz.</p></article>
-          <article class="rounded-3xl border border-white/10 bg-black/15 p-6"><h3 class="text-lg font-semibold text-white">Píer 54</h3><p class="mt-2 text-sm leading-6 text-slate-400">Frutos do mar e cozinha brasileira junto à água, com a Ponte Hercílio Luz como parte do cenário.</p></article>
-          <article class="rounded-3xl border border-white/10 bg-black/15 p-6"><h3 class="text-lg font-semibold text-white">Armazém Rita Maria</h3><p class="mt-2 text-sm leading-6 text-slate-400">Complexo restaurado com diferentes operações gastronômicas a poucos minutos da cabeceira insular.</p></article>
-          <article class="rounded-3xl border border-white/10 bg-black/15 p-6"><h3 class="text-lg font-semibold text-white">Mercado Público de Florianópolis</h3><p class="mt-2 text-sm leading-6 text-slate-400">Para petiscos, frutos do mar e sabores ligados ao cotidiano do Centro Histórico.</p></article>
+          <article class="rounded-3xl border border-white/10 bg-black/15 p-6"><h3 class="text-lg font-semibold text-white">Parrillas e churrascarias</h3><p class="mt-2 text-sm leading-6 text-slate-400">Casas de inspiração pampeana e parrillas ao redor do Parque da Luz e da Rua Felipe Schmidt, boas para carnes e refeições completas.</p></article>
+          <article class="rounded-3xl border border-white/10 bg-black/15 p-6"><h3 class="text-lg font-semibold text-white">Frutos do mar e cozinha brasileira</h3><p class="mt-2 text-sm leading-6 text-slate-400">Restaurantes à beira da baía e no Centro servem peixes e frutos do mar regionais, com a ponte compondo o cenário em várias casas da orla.</p></article>
+          <article class="rounded-3xl border border-white/10 bg-black/15 p-6"><h3 class="text-lg font-semibold text-white">Complexos gastronômicos históricos</h3><p class="mt-2 text-sm leading-6 text-slate-400">Armazéns e galpões restaurados próximos à cabeceira insular reúnem várias operações em um só endereço — ideal para grupos com gostos diferentes.</p></article>
+          <article class="rounded-3xl border border-white/10 bg-black/15 p-6"><h3 class="text-lg font-semibold text-white">Mercados e botecos tradicionais</h3><p class="mt-2 text-sm leading-6 text-slate-400">No Mercado Público e arredores, petiscos, frutos do mar e sabores ligados ao cotidiano do Centro Histórico — a opção mais "de cidade" do roteiro.</p></article>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- HISTÓRIAS E CURIOSIDADES -->
+  <section id="curiosidades" class="py-24">
+    <div class="container-shell">
+      <div class="max-w-3xl">
+        <p class="eyebrow">Histórias da ponte</p>
+        <h2 class="mt-4 font-[Georgia] text-4xl leading-tight text-white md:text-6xl">Fatos que os moradores contam — e que a engenharia explica</h2>
+        <p class="mt-6 text-base leading-8 text-slate-300">Além dos números, a Hercílio Luz guarda histórias de políticos, engenheiros, pedágios, alertas internacionais e uma restauração quase impossível. As curiosidades abaixo são baseadas em registros históricos e publicações técnicas públicas.</p>
+      </div>
+      <div class="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+        {stories.map(([tag, title, text]) => (
+          <article class="panel flex flex-col rounded-3xl p-7">
+            <span class="inline-flex w-fit rounded-full border border-[#d68b46]/40 px-3 py-1 text-[10px] font-bold uppercase tracking-[.16em] text-[#e3a86f]">{tag}</span>
+            <h3 class="mt-4 text-lg font-semibold text-white">{title}</h3>
+            <p class="mt-3 text-sm leading-7 text-slate-400">{text}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- GALERIA -->
   <section class="py-24">
     <div class="container-shell">
       <div class="grid gap-4 md:grid-cols-12 md:grid-rows-2">
-        <img src="/images/ponte-hercilio-luz-panorama.jpg" alt="Vista panorâmica da Ponte Hercílio Luz" class="min-h-72 w-full rounded-3xl object-cover md:col-span-7 md:row-span-2 md:h-full" width="1200" height="900" loading="lazy" />
-        <img src="/images/ponte-hercilio-luz-noite.jpg" alt="Ponte Hercílio Luz iluminada à noite" class="min-h-64 w-full rounded-3xl object-cover md:col-span-5" width="900" height="600" loading="lazy" />
-        <img src="/images/ponte-hercilio-luz-detalhe.jpg" alt="Detalhe da estrutura metálica da Ponte Hercílio Luz" class="min-h-64 w-full rounded-3xl object-cover md:col-span-5" width="900" height="600" loading="lazy" />
+        <img src="/images/ponte-hercilio-luz-panorama.jpg" alt="Vista panorâmica da Ponte Hercílio Luz" class="min-h-72 w-full rounded-3xl object-cover md:col-span-7 md:row-span-2 md:h-full" width="1680" height="1200" loading="lazy" decoding="async" />
+        <img src="/images/ponte-hercilio-luz-noite.jpg" alt="Ponte Hercílio Luz iluminada à noite" class="min-h-64 w-full rounded-3xl object-cover md:col-span-5" width="1600" height="1060" loading="lazy" decoding="async" />
+        <img src="/images/ponte-hercilio-luz-detalhe.jpg" alt="Detalhe da estrutura metálica da Ponte Hercílio Luz" class="min-h-64 w-full rounded-3xl object-cover md:col-span-5" width="1600" height="1060" loading="lazy" decoding="async" />
       </div>
       <p class="mt-4 text-xs text-slate-500">Fotografias locais do projeto. Autoria e licenças completas em <a class="underline hover:text-white" href="/CREDITOS-IMAGENS.txt">Créditos de imagens</a>.</p>
     </div>
   </section>
 
+  <!-- FAQ -->
   <section id="faq" class="bg-[#e8e1d7] py-24 text-[#07141d]">
     <div class="container-shell grid gap-10 lg:grid-cols-[.7fr_1.3fr]">
-      <div><p class="text-xs font-bold uppercase tracking-[.18em] text-[#a55e23]">Perguntas frequentes</p><h2 class="mt-4 font-[Georgia] text-4xl md:text-5xl">FAQ da Ponte Hercílio Luz</h2></div>
+      <div>
+        <p class="text-xs font-bold uppercase tracking-[.18em] text-[#a55e23]">Perguntas frequentes</p>
+        <h2 class="mt-4 font-[Georgia] text-4xl md:text-5xl">FAQ da Ponte Hercílio Luz</h2>
+        <p class="mt-5 leading-7 text-[#4d5b63]">Dúvidas de quem planeja visitar — da travessia a pé ao uso de drone.</p>
+      </div>
       <div class="divide-y divide-[#07141d]/15 border-y border-[#07141d]/15">
         {faq.map((item) => <details class="group py-5"><summary class="cursor-pointer list-none pr-8 text-lg font-semibold">{item.q}<span class="float-right text-[#a55e23] group-open:rotate-45">+</span></summary><p class="mt-3 max-w-2xl leading-7 text-[#4d5b63]">{item.a}</p></details>)}
       </div>
     </div>
   </section>
 
+  <!-- CTA FINAL -->
   <section class="py-20">
     <div class="container-shell panel overflow-hidden rounded-[2rem] p-8 md:p-12">
       <div class="bridge-line"></div>

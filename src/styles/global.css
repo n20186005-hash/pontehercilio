@@ -17,6 +17,7 @@
 }
 
 html { scroll-behavior: smooth; }
+section[id], div[id] { scroll-margin-top: 6rem; }
 body {
   margin: 0;
   background: var(--night);

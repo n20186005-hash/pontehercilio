@@ -1,0 +1,9 @@
+# Configuração do pnpm (v11: configuração vive em pnpm-workspace.yaml).
+# Permite os scripts de build nativos de esbuild (Astro/Vite) e workerd (Wrangler).
+allowBuilds:
+  - esbuild
+  - workerd
+
+# Não roda "pnpm install" automaticamente antes dos scripts (a checagem
+# "Ignored build scripts" não deve impedir dev/build quando o projeto está em dia).
+verifyDepsBeforeRun: false

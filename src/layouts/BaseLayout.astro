@@ -32,17 +32,25 @@ const schemas = Array.isArray(schema) ? schema : schema ? [schema] : [];
     <link rel="icon" type="image/png" sizes="32x32" href="/brand/favicon-32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/brand/favicon-16.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/brand/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Ponte Hercílio Luz" />
     <meta property="og:locale" content="pt_BR" />
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Guia Ponte Hercílio Luz – Florianópolis" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     {canonical && <meta property="og:url" content={canonical} />}
     {ogImage && <meta property="og:image" content={ogImage} />}
+    {ogImage && <meta property="og:image:alt" content="Ponte Hercílio Luz, ponte pênsil no Centro de Florianópolis (Santa Catarina, Brasil)" />}
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     {ogImage && <meta name="twitter:image" content={ogImage} />}
-    {schemas.map((item) => <script type="application/ld+json" set:html={JSON.stringify(item)} />)}
+    {ogImage && <meta name="twitter:image:alt" content="Ponte Hercílio Luz, ponte pênsil no Centro de Florianópolis (Santa Catarina, Brasil)" />}
+    {schemas.map((item) => <script is:inline type="application/ld+json" set:html={JSON.stringify(item)} />)}
     <script is:inline>
       (() => {
         const KEY = 'phl-cookie-preferences';
@@ -67,17 +75,27 @@ const schemas = Array.isArray(schema) ? schema : schema ? [schema] : [];
         });
       })();
     </script>
+    <script is:inline>
+      if ('serviceWorker' in navigator && location.protocol === 'https:') {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js').catch(() => {});
+        });
+      }
+    </script>
   </head>
   <body>
     <header class="fixed inset-x-0 top-0 z-40 border-b border-white/10 bg-[#03090e]/82 backdrop-blur-xl">
       <div class="container-shell flex h-18 items-center justify-between gap-5">
         <Logo />
-        <nav class="hidden items-center gap-6 text-sm text-slate-300 md:flex" aria-label="Navegação principal">
+        <nav class="hidden items-center gap-6 text-sm text-slate-300 lg:flex" aria-label="Navegação principal">
           <a href="/#historia" class="hover:text-white">História</a>
+          <a href="/#engenharia" class="hover:text-white">Engenharia</a>
           <a href="/#visita" class="hover:text-white">Visita</a>
-          <a href="/#entorno" class="hover:text-white">Entorno</a>
+          <a href="/#clima" class="hover:text-white">Clima</a>
+          <a href="/#servicos" class="hover:text-white">Serviços</a>
           <a href="/#faq" class="hover:text-white">FAQ</a>
         </nav>
+        <a href="/#curiosidades" class="hidden rounded-full border border-white/15 px-3 py-1.5 text-xs font-semibold text-slate-300 transition hover:border-[#d68b46] hover:text-white xl:inline-flex">Curiosidades</a>
         <a href="https://maps.app.goo.gl/NTxFSZTyTbenYDZo6" target="_blank" rel="noopener noreferrer" class="rounded-full border border-[#d68b46]/70 px-4 py-2 text-xs font-semibold tracking-wide text-[#f0c494] transition hover:bg-[#d68b46] hover:text-[#07141d]">Abrir no mapa</a>
       </div>
     </header>
