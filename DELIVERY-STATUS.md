@@ -5,6 +5,7 @@
 1. **Pacote base**: site estático Astro 7.2.9 + Tailwind CSS + TypeScript para Cloudflare Workers (`assets.directory = ./dist`), página principal em pt-BR, JSON-LD `TouristAttraction` + `FAQPage`, GA4 consentido, páginas de privacidade/termos/cookies, favicon e logo locais.
 2. **Rodadas de conteúdo e otimização (03/09/2026)**: clima em tempo real, seções de engenharia e curiosidades, serviços neutros do entorno, FAQ ampliada para 12 perguntas e compressão de imagens (−94,5%).
 3. **Rodada de dados finais, SEO de entidade única e PWA (03/09/2026)** — detalhada na última seção deste arquivo.
+4. **Correção do pipeline de build (03/09/2026)**: `pnpm-workspace.yaml` usava a chave inválida `allowBuilds` em formato de lista (e `onlyBuiltDependencies`, nome da chave do pnpm v10). No pnpm v11 a configuração correta é `allowBuilds` como **mapa pacote → true/false**; sem ela, o instalador da plataforma abortava em `ERR_PNPM_IGNORED_BUILDS` (esbuild 0.28.1/0.28.2 e workerd bloqueados). Corrigido e validado com `pnpm install --frozen-lockfile` (exit 0, postinstall de esbuild/workerd executados).
 
 ## O que foi adicionado nesta rodada
 
