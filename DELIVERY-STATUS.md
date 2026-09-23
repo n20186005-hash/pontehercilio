@@ -83,3 +83,30 @@ Reconstrução da lista com base nas categorias conhecidas (JSON-LD / horários 
 10. **Consistência de idioma e dados** — PASS. Site único em pt-BR (`<html lang="pt-BR">`, `og:locale pt_BR`), sem resquícios de outros POIs (busca por Sule/bless/jaipur/pompeii etc.: 0 ocorrências). Coordenadas −27,5938117/−48,5676850, CEP 88010-400, Plus Code CC4M+FX, curto `NTxFSZTyTbenYDZo6` e embed pb `4v1788345404308` (idioma da interface pt-BR) são únicos e consistentes em página, layout, rodapé e JSON-LD.
 
 Verificações: `astro check` 0 erros/0 warnings/0 hints; build estático OK; re-inspeção pós-build dos arquivos PWA/robots/sitemap/créditos. Pendências de rodadas anteriores mantidas: revisão editorial humana do conteúdo pt-BR antes do lançamento e confirmação do emparelhamento de créditos fotográficos.
+
+## Rodada 5 — Otimização SEO guiada pelo Search Console (23/09/2026)
+
+### Diagnóstico dos dados (3 meses)
+- 156 impressões, 1 clique, CTR ~0,6%, posição média ~18 (páginas 2–5).
+- Impressões divididas em três hosts: `https://pontehercilio.com/` (73), `http://pontehercilio.com/` (61) e `https://www.pontehercilio.com/` (22) — sinal de canônica competindo entre versões.
+- Consultas: `ponte hercilio luz` (35), `ponte hercílio luz` (8), `puente hercilio luz` (3), `ponte hercílio luz horários` (1), `parque da luz florianópolis` (1), `ponte estaiada florianópolis` (1), `ponte pênsil de florianópolis` (1).
+- 121 das 156 impressões no Brasil; 81 em dispositivos móveis (52%).
+
+### Ações implementadas
+1. **Nome único do site**: `src/data/site.ts` com `SITE_NAME = "Ponte Hercílio Luz Florianópolis — Guia de Visita"` (atração + cidade + guia), `withSiteName()` para páginas internas e constantes de endereço/geo/Plus Code/avaliação. `og:site_name`, `apple-mobile-web-app-title` e `site.webmanifest` leem a mesma fonte; títulos de termos/privacidade/cookies/404 passaram a usar o sufixo.
+2. **TDK da home com intenção de busca**: título `Ponte Hercílio Luz Florianópolis: horários, como chegar e história`; description com horários, circulação, iluminação, como chegar, mirantes e história.
+3. **Três páginas de cauda longa** (novas, com FAQ + WebPage + BreadcrumbList e links de volta): `/horarios/` (circulação, iluminação cênica, o que altera o acesso), `/como-chegar/` (a pé, ônibus/TICEN, bicicleta, carro, continente, Plus Code) e `/historia/` (capítulos 1922–2026, linha do tempo e engenharia). Home ganhou bloco "Guias do visitante"; header e rodapé linkam as três.
+4. **Conteúdo alinhado às consultas**: nova seção `#horarios` na home; seção `#pensil-estaiada` explicando que a ponte é pênsil (barras de olhal) e não estaiada; transporte renomeado para `#como-chegar`; Parque da Luz reforçado como acesso principal pelo lado da ilha.
+5. **FAQ da home**: de 12 para 17 perguntas, incluindo horário de funcionamento, pênsil x estaiada, como chegar de ônibus, tempo de travessia a pé e Parque da Luz.
+6. **JSON-LD ampliado**: `WebSite` na home; `WebPage` + `BreadcrumbList` nas páginas internas; `additionalType: https://schema.org/Bridge`; `alternateName` com variantes sem acento, em espanhol (`Puente Hercílio Luz`) e em inglês (`Hercílio Luz Bridge`). Schemas extraídos para `src/lib/schema.ts`.
+7. **Segurança e performance**: `public/_headers` com HSTS, `X-Content-Type-Options`, `X-Frame-Options`, `Referrer-Policy`, `Permissions-Policy` e `Cross-Origin-Opener-Policy` (além de `no-store` em `/sw.js`); `fetchpriority="high"` na imagem do herói; `preconnect`/`dns-prefetch` condizentes com o GA4 consentido.
+8. **Documentação**: README com a seção "Domínio canônico" — 301 de `http://` e `www` para `https://pontehercilio.com` deve ser feito no painel da Cloudflare (Always Use HTTPS + Redirect Rules), porque assets estáticos em Workers não aceitam redirecionamento de host via `_redirects`.
+
+### Verificações desta rodada
+- `astro check`: **18 arquivos, 0 erros / 0 warnings / 0 hints**.
+- `pnpm build`: **8 páginas** + `sitemap-index.xml` (7 URLs: /, /como-chegar/, /cookies/, /historia/, /horarios/, /privacidade/, /termos/).
+- Pós-build: canonical absoluto em todas as páginas, `og:site_name` único, 17 `Question` na home, 6 em cada guia, e `_headers` publicado no `dist`.
+
+### Pendências
+- Criar os redirecionamentos 301 no painel da Cloudflare (fora do código) e acompanhar a consolidação dos hosts no Search Console.
+- Avaliar versões em espanhol/inglês no futuro: há impressões em EUA, Espanha, Argentina, Portugal e México e a consulta `puente hercilio luz`, mas por ora o site segue monolíngue em pt-BR e as variantes de nome foram registradas em `alternateName`.

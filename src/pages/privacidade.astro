@@ -1,7 +1,8 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { withSiteName } from '../data/site';
 ---
-<BaseLayout title="Política de Privacidade | Guia Ponte Hercílio Luz" description="Política de privacidade do Guia Ponte Hercílio Luz." path="/privacidade/">
+<BaseLayout title={withSiteName('Política de privacidade')} description="Política de privacidade do Guia Ponte Hercílio Luz." path="/privacidade/">
   <section class="container-shell pt-36 pb-24">
     <p class="eyebrow">Documentos do site</p>
     <h1 class="mt-4 font-[Georgia] text-5xl text-white md:text-7xl">Política de Privacidade</h1>

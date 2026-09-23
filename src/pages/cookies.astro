@@ -1,7 +1,8 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { withSiteName } from '../data/site';
 ---
-<BaseLayout title="Configurações de Cookies | Guia Ponte Hercílio Luz" description="Gerencie as preferências de cookies do Guia Ponte Hercílio Luz." path="/cookies/">
+<BaseLayout title={withSiteName('Configurações de cookies')} description="Gerencie as preferências de cookies do Guia Ponte Hercílio Luz." path="/cookies/">
   <section class="container-shell pt-36 pb-24">
     <p class="eyebrow">Controle de privacidade</p>
     <h1 class="mt-4 font-[Georgia] text-5xl text-white md:text-7xl">Configurações de Cookies</h1>

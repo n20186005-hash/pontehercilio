@@ -1,0 +1,18 @@
+# Cabeçalhos de segurança servidos com os arquivos estáticos (Cloudflare Workers Assets)
+/*
+  Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: SAMEORIGIN
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: geolocation=(), microphone=(), camera=()
+  Cross-Origin-Opener-Policy: same-origin
+
+# Service worker: nunca cachear
+/sw.js
+  Cache-Control: no-cache, no-store, must-revalidate
+
+# Assets com hash/versão fixa podem ser cacheados por mais tempo
+/brand/*
+  Cache-Control: public, max-age=604800
+/images/*
+  Cache-Control: public, max-age=604800

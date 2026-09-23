@@ -47,9 +47,22 @@ A seção `#clima` usa a API aberta **Open-Meteo** (sem chave e sem cookies), co
 
 O site é uma PWA instalável: `public/site.webmanifest` (ícones gerados em `public/brand/icon-192.png`, `icon-512.png` e `icon-maskable-512.png`), `theme-color` `#07141d` e `public/sw.js` registrado em páginas servidas por HTTPS. O service worker usa network-first para navegação e stale-while-revalidate para imagens, CSS e outros recursos do mesmo domínio, com fallback offline para a página inicial. O cache é exclusivo do domínio e seu funcionamento é descrito na Política de Privacidade.
 
-## SEO (entidade única)
+## SEO (entidade única e páginas de intenção)
 
-Dados do ponto turístico concentrados em `src/pages/index.astro`: TouristAttraction com `@id`, `alternateName`, `hasMap`, `aggregateRating` 4,8 (24.497 avaliações) e `sameAs` (Iphan, Governo de SC, PMF, Santur e Google Maps); FAQPage com 12 perguntas; canonical/OG sempre absolutos a partir do domínio.
+- **Nome do site**: constante `SITE_NAME` em `src/data/site.ts` (formato atração + cidade + guia de visita). `withSiteName()` sufixa as páginas internas; `og:site_name`, `site.webmanifest` e `apple-mobile-web-app-title` leem a mesma constante.
+- **Páginas**: `/` (visão geral), `/horarios/` (circulação e iluminação), `/como-chegar/` (acessos e transporte), `/historia/` (história e engenharia), além de privacidade, termos, cookies e 404. A home linka os três guias e o rodapé repete a navegação.
+- **Dados do ponto turístico**: `src/data/site.ts` (nome, endereço, geo, Plus Code, avaliação) e `src/lib/schema.ts` (TouristAttraction com `@id`, `alternateName`, `additionalType` Bridge, `hasMap`, `aggregateRating`, `sameAs`; além de WebSite, WebPage, BreadcrumbList e FAQPage por página).
+- **FAQ da home**: 17 perguntas, cobrindo as buscas mais frequentes — horário de funcionamento, pênsil x estaiada, como chegar de ônibus, tempo de travessia e Parque da Luz.
+- canonical, OG e sitemap são absolutos a partir do domínio configurado.
+
+## Domínio canônico (obrigatório no painel da Cloudflare)
+
+O Search Console mostrou impressões divididas entre `https://pontehercilio.com/`, `http://pontehercilio.com/` e `https://www.pontehercilio.com/`. As páginas já emitem `<link rel="canonical">` para a versão HTTPS sem `www`, mas o redirecionamento 301 precisa ser feito no painel da Cloudflare:
+
+1. **SSL/TLS → Edge Certificates**: ativar **Always Use HTTPS**.
+2. **Rules → Redirect Rules** (ou Bulk Redirects): redirecionar 301 `http://pontehercilio.com/*` → `https://pontehercilio.com/*` e `https://www.pontehercilio.com/*` → `https://pontehercilio.com/*`.
+
+Assets estáticos em Workers não suportam redirecionamento de host em `_redirects` (apenas caminhos), por isso a regra deve ser criada no painel. O arquivo `public/_headers` complementa com HSTS e cabeçalhos de segurança.
 
 ## Cloudflare Worker
 
@@ -75,4 +88,4 @@ As regras de circulação podem mudar temporariamente por eventos e manutenção
 
 ## Status do pacote
 
-`DELIVERY-STATUS.md` registra o histórico da entrega. O código está com `astro check` 0 erros e build estático concluído (5 páginas).
+`DELIVERY-STATUS.md` registra o histórico da entrega. O código está com `astro check` 0 erros e build estático concluído (8 páginas).

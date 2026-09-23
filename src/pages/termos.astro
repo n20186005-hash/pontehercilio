@@ -1,7 +1,8 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { withSiteName } from '../data/site';
 ---
-<BaseLayout title="Termos de Uso | Guia Ponte Hercílio Luz" description="Termos de uso do Guia Ponte Hercílio Luz." path="/termos/">
+<BaseLayout title={withSiteName('Termos de uso')} description="Termos de uso do Guia Ponte Hercílio Luz." path="/termos/">
   <section class="container-shell pt-36 pb-24">
     <p class="eyebrow">Documentos do site</p>
     <h1 class="mt-4 font-[Georgia] text-5xl text-white md:text-7xl">Termos de Uso</h1>
