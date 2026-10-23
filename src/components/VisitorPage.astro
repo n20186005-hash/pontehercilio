@@ -1,0 +1,14 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { withSiteName, GUIDE_ROUTES } from '../data/site';
+import { attractionSchema, breadcrumbSchema, faqSchema, webPageSchema } from '../lib/schema';
+interface Props {title:string;description:string;path:string;intro:string;sections:Array<string[]>;faq:Array<{q:string;a:string}>;sources:Array<string[]>;image?:string;}
+const {title,description,path,intro,sections,faq,sources,image='panorama'}=Astro.props;
+const origin='https://pontehercilio.com';
+const schema=[attractionSchema(origin),webPageSchema(origin,path,withSiteName(title),description),breadcrumbSchema(origin,[{name:'Início',path:'/'},{name:title,path}]),faqSchema(faq)];
+---
+<BaseLayout title={withSiteName(title)} description={description} path={path} schema={schema}>
+<section class="container-shell pt-36 pb-16"><nav aria-label="Trilha de navegação"><a href="/" class="text-[#efbd8d]">Início</a> / {title}</nav><p class="eyebrow mt-8">Florianópolis · guia independente</p><h1 class="mt-4 max-w-4xl font-[Georgia] text-4xl leading-tight text-white md:text-6xl">{title}</h1><p class="mt-6 max-w-3xl text-lg leading-8 text-slate-300">{intro}</p></section>
+<section class="border-y border-white/10 bg-[#081721] py-16"><div class="container-shell grid gap-10 lg:grid-cols-2"><div class="space-y-6">{sections.map(([heading,text])=><article class="panel rounded-3xl p-7"><h2 class="font-[Georgia] text-2xl text-white">{heading}</h2><p class="mt-4 leading-8 text-slate-300">{text}</p></article>)}</div><div><img class="w-full rounded-3xl object-cover" src={'/images/ponte-hercilio-luz-'+image+'.jpg'} alt="Registro histórico da Ponte Hercílio Luz e da baía de Florianópolis" width="1200" height="800" loading="lazy"/><p class="mt-3 text-sm text-slate-400">Registro de época, sem indicar a operação atual. <a href="/creditos/" class="underline">Autoria, data e licença por fotografia</a>.</p><div class="panel mt-8 rounded-3xl p-7"><h2 class="text-2xl font-[Georgia]">Fontes e avisos</h2><ul class="mt-4 space-y-4">{sources.map(([label,url])=><li><a class="text-[#efbd8d] underline" href={url} target="_blank" rel="noopener noreferrer">{label} ↗</a></li>)}</ul></div></div></div></section>
+<section class="container-shell py-20"><h2 class="font-[Georgia] text-3xl">Perguntas frequentes</h2><div class="mt-8 divide-y divide-white/10">{faq.map(({q,a})=><details class="py-5"><summary class="cursor-pointer text-lg font-semibold">{q}</summary><p class="mt-3 max-w-3xl leading-8 text-slate-300">{a}</p></details>)}</div><nav aria-label="Continue no guia" class="mt-10 flex flex-wrap gap-5">{GUIDE_ROUTES.filter(r=>r.path!==path).map(r=><a class="text-[#efbd8d] underline" href={r.path}>{r.title}</a>)}<a class="text-[#efbd8d] underline" href="/#clima">Previsão do tempo</a></nav><p class="mt-8 text-xs text-slate-400">Revisão editorial: 23 de outubro de 2026. Este guia não confirma a liberação em tempo real.</p></section>
+</BaseLayout>

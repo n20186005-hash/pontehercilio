@@ -1,13 +1,13 @@
 ---
-// Módulo de clima — Ponte Hercílio Luz (Florianópolis, -27.5938117, -48.5676850).
+// Módulo de clima — Ponte Hercílio Luz (Florianópolis, -27.5938117, -48.5651101).
 // O site é estático (Cloudflare Workers assets), portanto a previsão é buscada no
-// navegador diretamente da API aberta Open-Meteo (sem chave, sem cookies) e cacheada
+// navegador diretamente da API aberta Open-Meteo (consulta direta no navegador) e cacheada
 // localmente por 30 minutos. Uma casca estática permanece no HTML para navegadores
 // sem JavaScript.
 const LAT = -27.5938117;
-const LON = -48.5676850;
+const LON = -48.5651101;
 const TIMEZONE = 'America/Sao_Paulo';
-const CACHE_KEY = 'phl-weather-v1';
+const CACHE_KEY = 'phl-weather-v2';
 const CACHE_TTL_MINUTES = 30;
 ---
 
@@ -15,7 +15,7 @@ const CACHE_TTL_MINUTES = 30;
   <div class="container-shell">
     <div class="max-w-3xl">
       <p class="eyebrow">Clima e melhor momento</p>
-      <h2 class="mt-4 font-[Georgia] text-4xl leading-tight text-white md:text-6xl">Tempo real e previsão para planejar a travessia</h2>
+      <h2 class="mt-4 font-[Georgia] text-4xl leading-tight text-white md:text-6xl">Previsão do tempo para planejar a travessia</h2>
       <p class="mt-6 text-base leading-8 text-slate-300">Florianópolis tem clima subtropical úmido: verões quentes com chuvas frequentes, invernos amenos e ventos constantes na baía. A passarela é totalmente exposta — sol, chuva e ventania mudam a experiência. Consulte a previsão abaixo antes de escolher o horário da visita.</p>
     </div>
 
@@ -42,11 +42,12 @@ const CACHE_TTL_MINUTES = 30;
           ))}
         </ol>
       </div>
-      <p id="phl-weather-status" class="mt-6 border-t border-white/10 pt-4 text-xs leading-5 text-slate-500">Previsão fornecida pela API aberta Open-Meteo — sem chave, sem cookies — com cache local de 30 minutos.</p>
+      <p id="phl-weather-status" class="mt-6 border-t border-white/10 pt-4 text-xs leading-5 text-slate-500">Previsão fornecida pela API aberta Open-Meteo — consulta direta no navegador — com cache local de 30 minutos.</p>
     </div>
 
+    <p class="mt-4 text-xs text-slate-400">Dados e previsão: <a class="underline" href="https://open-meteo.com/" target="_blank" rel="noopener noreferrer">Open-Meteo</a>. A previsão não confirma acesso à ponte.</p>
     <noscript>
-      <p class="mt-4 text-sm leading-6 text-slate-400">Ative o JavaScript para ver a previsão do tempo ao vivo, ou consulte os canais oficiais de meteorologia antes de sair.</p>
+      <p class="mt-4 text-sm leading-6 text-slate-400">Ative o JavaScript para ver a previsão do tempo do provedor, ou consulte os canais oficiais de meteorologia antes de sair.</p>
     </noscript>
   </div>
 </section>
@@ -113,8 +114,8 @@ const CACHE_TTL_MINUTES = 30;
     const weekday = (dateStr, i) => {
       if (i === 0) return 'Hoje';
       if (i === 1) return 'Amanhã';
-      const d = new Date(dateStr + 'T12:00:00');
-      return d.toLocaleDateString('pt-BR', { weekday: 'short' }).replace('.', '');
+      const d = new Date(dateStr + 'T12:00:00Z');
+      return d.toLocaleDateString('pt-BR', { weekday: 'short', timeZone: 'UTC' }).replace('.', '');
     };
     const iconSvg = (code) => {
       const key = (WMO[code] && WMO[code][1]) || 'sun';
@@ -146,30 +147,44 @@ const CACHE_TTL_MINUTES = 30;
             '<div class="mx-auto my-3 ' + (isToday ? 'text-[#e3a86f]' : 'text-slate-200') + '">' + iconSvg(data.daily.weather_code[i]) + '</div>' +
             '<span class="block text-sm font-semibold text-white">' + round1(max) + 'C</span>' +
             '<span class="block text-xs text-slate-400">' + round1(min) + 'C</span>' +
-            (p != null ? '<span class="mt-1 block text-[10px] ' + (p >= 50 ? 'text-sky-300' : 'text-slate-500') + '">' + p + '% chuva</span>' : '') +
+            (p != null ? '<span class="mt-1 block text-[10px] ' + (p >= 50 ? 'text-sky-300' : 'text-slate-500') + '">' + p + '% de probabilidade de chuva</span>' : '<span>Probabilidade —</span>') +
             '</li>'
           );
         }).join('');
         daysEl.innerHTML = days;
       }
-      const when = c.time ? new Date(c.time) : null;
-      const updated = when ? 'Previsão atualizada às ' + when.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }) + ' (horário local). ' : '';
-      if (statusEl) statusEl.textContent = updated + 'Fonte: Open-Meteo — dados meteorológicos abertos, sem chave e sem cookies.';
+      const updated = 'Horário do provedor: ' + c.time.replace('T', ' ') + ' · America/Sao_Paulo (UTC−3). ';
+      if (statusEl) statusEl.textContent = updated + 'Fonte: Open-Meteo — dados meteorológicos abertos, consulta direta no navegador.';
     };
 
     const showError = (message) => {
+      tempEl.textContent = '—'; iconBox.innerHTML = ''; daysEl.innerHTML = '';
       descEl.textContent = 'Não foi possível carregar a previsão agora.';
       if (statusEl) statusEl.textContent = message + ' Tente novamente em instantes — a página também mostra a previsão ao ser recarregada.';
       if (metaEl) metaEl.textContent = '';
     };
 
+    const validate = (data) => {
+      const c=data?.current,d=data?.daily;
+      const num=(v,lo,hi)=>{if(typeof v!=='number'||!Number.isFinite(v)||v<lo||v>hi)throw Error('Invalid weather');};
+      const code=v=>{if(typeof v!=='number'||!Object.hasOwn(WMO,v))throw Error('Unknown WMO');};
+      const today=new Intl.DateTimeFormat('en-CA',{timeZone:TIMEZONE,year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
+      if(!c||!d||data.timezone!==TIMEZONE||typeof c.time!=='string'||!/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/.test(c.time))throw Error('Incomplete weather');
+      const age=Date.now()-Date.parse(c.time+'-03:00');
+      if(!Number.isFinite(age)||age>10800000||age< -900000||c.time.slice(0,10)!==today)throw Error('Stale weather');
+      num(c.temperature_2m,-100,65);num(c.apparent_temperature,-120,80);num(c.relative_humidity_2m,0,100);num(c.wind_speed_10m,0,500);code(c.weather_code);if(![0,1].includes(c.is_day))throw Error('Invalid day');
+      for(const key of ['time','weather_code','temperature_2m_max','temperature_2m_min','precipitation_probability_max'])if(!Array.isArray(d[key])||d[key].length!==7)throw Error('Incomplete days');
+      d.time.forEach((day,i)=>{if(typeof day!=='string'||!/^\d{4}-\d{2}-\d{2}$/.test(day)||!Number.isFinite(Date.parse(day))||new Date(day).toISOString().slice(0,10)!==day||(i===0&&day!==today)||(i>0&&Date.parse(day)-Date.parse(d.time[i-1])!==86400000))throw Error('Invalid day');code(d.weather_code[i]);num(d.temperature_2m_max[i],-100,65);num(d.temperature_2m_min[i],-100,65);if(d.temperature_2m_min[i]>d.temperature_2m_max[i])throw Error('Inverted temperatures');if(d.precipitation_probability_max[i]!==null)num(d.precipitation_probability_max[i],0,100);});
+      return data;
+    };
     const readCache = () => {
       try {
         const raw = localStorage.getItem(CACHE_KEY);
         if (!raw) return null;
         const parsed = JSON.parse(raw);
-        if (!parsed || !parsed.savedAt || Date.now() - parsed.savedAt > CACHE_TTL) return null;
-        return parsed.data;
+        const age=Date.now()-parsed?.savedAt;
+        if (!parsed || typeof parsed.savedAt!=='number'||!Number.isFinite(age)||age<0||age>CACHE_TTL) return null;
+        return validate(parsed.data);
       } catch {
         return null;
       }
@@ -188,16 +203,16 @@ const CACHE_TTL_MINUTES = 30;
         render(cached);
         return;
       }
+      const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),8000);
       try {
-        const res = await fetch(URL);
+        const res = await fetch(URL,{signal:controller.signal});
         if (!res.ok) throw new Error('HTTP ' + res.status);
-        const data = await res.json();
+        const data = validate(await res.json());
         writeCache(data);
         render(data);
       } catch (err) {
         showError('Falha de conexão com o serviço de meteorologia.');
-        console.error('phl-weather:', err);
-      }
+      } finally { clearTimeout(timer); }
     };
 
     load();

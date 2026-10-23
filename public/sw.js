@@ -1,6 +1,6 @@
 /* Guia Ponte Hercílio Luz — service worker para navegação offline básica.
    Cache local exclusivo deste domínio; o visitante pode limpá-lo pelo navegador. */
-const CACHE = 'pontehercilio-v1';
+const CACHE = 'pontehercilio-v2';
 const PRECACHE = ['/', '/privacidade/', '/termos/', '/cookies/', '/site.webmanifest'];
 
 self.addEventListener('install', (event) => {
@@ -34,11 +34,11 @@ self.addEventListener('fetch', (event) => {
       fetch(request)
         .then((response) => {
           const copy = response.clone();
-          caches.open(CACHE).then((cache) => cache.put('/', copy));
+          if (response.ok) event.waitUntil(caches.open(CACHE).then((cache) => cache.put(request, copy)));
           return response;
         })
         .catch(() =>
-          caches.match(request).then((cached) => cached || caches.match('/'))
+          caches.match(request).then((cached) => cached || new Response('Sem conexão. Recarregue esta página quando estiver online.', {status:503,headers:{'Content-Type':'text/plain; charset=utf-8'}}))
         )
     );
     return;

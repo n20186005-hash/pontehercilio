@@ -26,15 +26,14 @@ export const ADDRESS = {
 };
 
 export const GEO = {
-  latitude: -27.593811676247984,
-  longitude: -48.56768502278584,
+  latitude: -27.5938117,
+  longitude: -48.5651101,
 };
 
-export const PLUS_CODE = 'CC4M+FX Centro, Florianópolis - SC';
 export const MAPS_URL = 'https://maps.app.goo.gl/NTxFSZTyTbenYDZo6';
 
-/** Avaliação pública usada como referência (sincronizada em setembro de 2026). */
-export const RATING = { value: '4.8', count: '24497' };
+/** Avaliação pública usada como referência (consulta ao Google Maps em 23 de outubro de 2026). */
+export const RATING = { value: '4.8', count: '24611' };
 
 /** Rotas internas do guia, usadas em links de navegação e breadcrumbs. */
 export const GUIDE_ROUTES = [

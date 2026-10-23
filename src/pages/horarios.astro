@@ -1,149 +1,69 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import { withSiteName } from '../data/site';
-import { attractionSchema, breadcrumbSchema, faqSchema, webPageSchema } from '../lib/schema';
-
-const pageTitle = 'Horários e circulação';
-const pageDescription = 'Horários da Ponte Hercílio Luz em Florianópolis: circulação de pedestres, ciclistas e veículos, restrições em fins de semana, iluminação cênica e onde confirmar o acesso no dia da visita.';
-const pagePath = '/horarios/';
-
-const siteOrigin = Astro.site ? Astro.site.toString().replace(/\/$/, '') : '';
-
-const access = [
-  ['Pedestres', 'A travessia pelas passarelas pode ser feita ao longo do dia. Não há bilheteria, portão ou ingresso: a ponte funciona como via pública e o acesso a pé é gratuito.'],
-  ['Bicicletas', 'Ciclistas compartilham o espaço com pedestres, respeitando a sinalização e a prioridade de quem caminha. Em eventos e manutenções, a circulação pode ser ajustada.'],
-  ['Veículos', 'Nos dias úteis, o tráfego segue as regras operacionais vigentes. Fins de semana e feriados costumam priorizar o uso não motorizado, com bloqueios temporários frequentes.'],
-];
-
-const periods = [
-  ['Manhã', 'Menos movimento e luz lateral suave. É o melhor momento para fotografar a estrutura com poucas pessoas e caminhar com mais conforto térmico no verão.'],
-  ['Fim de tarde', 'O horário mais procurado: luz baixa sobre a baía, pôr do sol e a transição para a iluminação cênica. Reserve tempo para o retorno antes de escurecer completamente, se preferir voltar com o visual noturno já aceso.'],
-  ['Noite', 'A iluminação cênica valoriza as torres e o vão pênsil. A orla da Beira-Mar Norte e o Parque da Luz são os pontos mais usados para ver o conjunto aceso, com a cidade ao fundo.'],
-];
-
-const alerts = [
-  'Eventos culturais, corridas e comemorações no Centro podem alterar a circulação em toda a cabeceira insular.',
-  'Serviços de manutenção e inspeção da estrutura geram interdições parciais ou totais, inclusive para pedestres.',
-  'Vento forte e temporais deixam o trecho suspenso mais exposto; em dias assim, avalie adiar a travessia a pé.',
-  'Feriados prolongados e alta temporada mudam o regime de circulação de veículos na ponte e no entorno.',
-];
-
-const faq = [
-  { q: 'A Ponte Hercílio Luz tem horário de funcionamento?', a: 'Não há tabela fixa de funcionamento divulgada para a travessia: a ponte é uma via pública e o acesso de pedestres e ciclistas ocorre ao longo do dia, sem bilheteria. O que muda é o regime de circulação de veículos, definido pela operação e sujeito a bloqueios temporários.' },
-  { q: 'Precisa pagar para atravessar a ponte?', a: 'Não. O pedágio existiu entre 1926 e 1935, quando a travessia custava 1 tostão. Hoje caminhar ou pedalar pela ponte é gratuito; os custos da visita ficam por conta de transporte, estacionamento e consumo no entorno.' },
-  { q: 'A ponte abre todos os dias?', a: 'Por ser via pública, não há dia de fechamento regular. Ainda assim, eventos, manutenção e condições climáticas podem restringir a passagem temporariamente — inclusive nos fins de semana, quando a prioridade costuma ser de pedestres e ciclistas.' },
-  { q: 'A que horas acende a iluminação cênica?', a: 'O projeto de iluminação entrou em operação no fim de 2024 e valoriza a estrutura depois do pôr do sol. O acendimento acompanha o anoitecer e pode variar conforme a programação e a época do ano; confirme os canais oficiais no dia da visita.' },
-  { q: 'Posso atravessar de carro em qualquer horário?', a: 'Não necessariamente. O tráfego de veículos segue as regras operacionais vigentes, com restrições comuns em fins de semana, feriados, eventos e serviços de manutenção. Para passeios turísticos, é mais simples estacionar no Centro e seguir a pé.' },
-  { q: 'Onde confirmar se a ponte está liberada hoje?', a: 'Consulte os comunicados do Governo de Santa Catarina (Secretaria de Estado da Infraestrutura e Mobilidade e programa Viva a Ponte) e da Prefeitura de Florianópolis antes de sair. Estes são os canais que definem operação, bloqueios e eventos.' },
-];
-
-const schema = [
-  attractionSchema(siteOrigin),
-  webPageSchema(siteOrigin, pagePath, withSiteName(pageTitle), pageDescription),
-  breadcrumbSchema(siteOrigin, [
-    { name: 'Início', path: '/' },
-    { name: pageTitle, path: pagePath }
-  ]),
-  faqSchema(faq),
-];
+import VisitorPage from "../components/VisitorPage.astro";
+const content = {
+  "title": "Horários da Ponte Hercílio Luz: pedestres, bicicletas e veículos",
+  "description": "Entenda o acesso à Ponte Hercílio Luz em Florianópolis: restrições de veículos, passarelas, avisos oficiais e limites dos horários publicados em mapas.",
+  "intro": "Não confunda o horário de um cadastro de mapas com a circulação de todos os usuários da ponte. Veículos, pedestres e bicicletas podem ter regras diferentes, alteradas por eventos e manutenção.",
+  "image": "noite",
+  "sections": [
+    [
+      "O que dizem as referências oficiais",
+      "O MPC-SC descreveu em julho de 2026 a proibição de veículos nos fins de semana para eventuais reparos e manutenção. A referência trata de veículos: não demonstra, por si, fechamento das passarelas de pedestres. Confira a sinalização e os comunicados de operação para a data da visita."
+    ],
+    [
+      "Como interpretar o Google Maps",
+      "O cadastro consultado em 23/10/2026 indicava 24 horas de segunda a sexta e fechado no sábado e domingo. É uma tabela de terceiro e não confirma todos os modos de circulação. Não use essa indicação isolada para decidir se pode caminhar na ponte no fim de semana."
+    ],
+    [
+      "Está aberta agora?",
+      "Este guia não recebe informação de liberação ao vivo. Consulte os avisos da SIE e da Prefeitura antes de sair; ao chegar, siga barreiras, sinalização e orientações locais. A previsão do tempo ajuda no planejamento, mas não estabelece interdição."
+    ],
+    [
+      "Luz e conforto",
+      "Escolha a luz da manhã ou do fim da tarde conforme sua preferência para fotografar. Os registros noturnos deste guia são históricos: não confirmam horário de acendimento, programação ou funcionamento atual da iluminação. Planeje também o retorno e as condições de vento e chuva."
+    ],
+    [
+      "Ingresso e serviços separados",
+      "As fontes descrevem uma travessia pública e não indicam ingresso turístico para uma caminhada comum. Passeios de barco, transporte e serviços vendidos por terceiros são produtos separados; anúncios não constituem preço de entrada da ponte. Este guia não realiza reservas."
+    ]
+  ],
+  "faq": [
+    {
+      "q": "A ponte fecha para pedestres no sábado e domingo?",
+      "a": "A restrição de veículos descrita pelo MPC-SC não equivale ao fechamento das passarelas. Este guia não confirma o acesso de pedestres ao vivo: consulte avisos oficiais e sinalização."
+    },
+    {
+      "q": "Há horário garantido de acendimento da iluminação?",
+      "a": "Não há horário de acendimento confirmado por este guia. Fotografias noturnas de anos anteriores não garantem o funcionamento no dia da visita."
+    },
+    {
+      "q": "O clima mostrado significa que a ponte está liberada?",
+      "a": "Não. Open-Meteo fornece previsão meteorológica, não informações de operação da ponte."
+    }
+  ],
+  "path": "/horarios/",
+  "sources": [
+    [
+      "MPC-SC — centenário e circulação de veículos (6/7/2026)",
+      "https://www.mpc.sc.gov.br/noticias/centenario-da-ponte-hercilio-luz-evidencia-importancia-da-fiscalizacao-dos-recursos-publicos-e-atuacao-do-mpc-sc/"
+    ],
+    [
+      "Governo de SC — características da ponte",
+      "https://www.sc.gov.br/vivaaponte/caracteristicas-da-ponte-hercilio-luz/"
+    ],
+    [
+      "Iphan — centenário e patrimônio",
+      "https://www.gov.br/iphan/pt-br/assuntos/noticias/ponte-hercilio-luz-chega-aos-100-anos-como-simbolo-de-santa-catarina"
+    ],
+    [
+      "SIE — consulte avisos de operação",
+      "https://www.sie.sc.gov.br/"
+    ],
+    [
+      "Prefeitura — Ponte Viva",
+      "https://redeplanejamento.pmf.sc.gov.br/pt-BR/projetos/ponte-viva"
+    ]
+  ]
+};
 ---
-
-<BaseLayout
-  title={withSiteName(pageTitle)}
-  description={pageDescription}
-  path={pagePath}
-  schema={schema}
->
-  <section class="container-shell pt-36 pb-16">
-    <nav aria-label="Trilha de navegação" class="text-xs uppercase tracking-[.16em] text-slate-500">
-      <ol class="flex flex-wrap items-center gap-x-2">
-        <li><a class="hover:text-white" href="/">Início</a></li>
-        <li aria-hidden="true">/</li>
-        <li class="text-slate-300">Horários e circulação</li>
-      </ol>
-    </nav>
-    <h1 class="mt-6 max-w-4xl font-[Georgia] text-4xl leading-tight text-white md:text-6xl">Horários da Ponte Hercílio Luz: circulação, travessia e iluminação</h1>
-    <p class="mt-6 max-w-3xl text-lg leading-8 text-slate-300">A <strong class="text-white">Ponte Hercílio Luz</strong>, no Centro de <strong class="text-white">Florianópolis</strong>, não tem bilheteria nem horário fixo de fechamento: funciona como via pública. O que o visitante precisa entender é como a circulação se organiza ao longo do dia — e o que pode mudar o acesso na data escolhida.</p>
-  </section>
-
-  <section class="border-y border-white/10 bg-[#081721] py-20">
-    <div class="container-shell">
-      <p class="eyebrow">Como funciona o acesso</p>
-      <h2 class="mt-4 font-[Georgia] text-3xl text-white md:text-4xl">Pedestres, bicicletas e carros</h2>
-      <div class="mt-10 grid gap-5 md:grid-cols-3">
-        {access.map(([title, text]) => (
-          <article class="panel rounded-3xl p-7">
-            <h3 class="text-xl font-semibold text-white">{title}</h3>
-            <p class="mt-3 leading-7 text-slate-400">{text}</p>
-          </article>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <section class="py-20">
-    <div class="container-shell">
-      <p class="eyebrow">Escolha o horário</p>
-      <h2 class="mt-4 font-[Georgia] text-3xl text-white md:text-4xl">O que cada período do dia oferece</h2>
-      <div class="mt-10 grid gap-5 md:grid-cols-3">
-        {periods.map(([title, text]) => (
-          <article class="rounded-3xl border border-white/10 bg-black/20 p-7">
-            <h3 class="text-xl font-semibold text-white">{title}</h3>
-            <p class="mt-3 leading-7 text-slate-400">{text}</p>
-          </article>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <section class="py-20">
-    <div class="container-shell grid gap-12 lg:grid-cols-[1.05fr_.95fr] lg:items-center">
-      <div>
-        <p class="eyebrow">Depois do pôr do sol</p>
-        <h2 class="mt-4 font-[Georgia] text-3xl text-white md:text-4xl">Iluminação cênica: o espetáculo noturno</h2>
-        <p class="mt-6 leading-8 text-slate-300">Desde o fim de 2024, o projeto de iluminação realça torres, cadeias de barras de olhal e o tabuleiro. O acendimento acompanha o anoitecer — portanto, o horário muda ao longo do ano — e pode ser ajustado por programação especial ou manutenção.</p>
-        <p class="mt-5 leading-8 text-slate-400">Os pontos mais usados para ver a ponte acesa são a orla da Beira-Mar Norte, o mirante do Parque da Luz e a orla do Estreito, no lado continental. Chegue alguns minutos antes do anoitecer para acompanhar a transição.</p>
-      </div>
-      <img src="/images/ponte-hercilio-luz-noite.jpg" alt="Ponte Hercílio Luz iluminada à noite em Florianópolis" class="aspect-[4/3] w-full rounded-[2rem] object-cover" width="1600" height="1200" loading="lazy" decoding="async" />
-    </div>
-  </section>
-
-  <section class="border-y border-white/10 bg-[#07141d] py-20">
-    <div class="container-shell grid gap-10 lg:grid-cols-[.85fr_1.15fr]">
-      <div>
-        <p class="eyebrow">Antes de sair</p>
-        <h2 class="mt-4 font-[Georgia] text-3xl text-white md:text-4xl">O que pode alterar o acesso</h2>
-        <p class="mt-6 leading-8 text-slate-400">A ponte é um bem tombado em operação. Intervenções e eventos fazem parte da rotina e podem mudar a circulação sem aviso prévio de longo prazo.</p>
-      </div>
-      <ul class="space-y-4 text-sm leading-7 text-slate-300">
-        {alerts.map((item) => <li class="rounded-2xl border border-white/10 bg-black/20 px-5 py-4">{item}</li>)}
-      </ul>
-    </div>
-  </section>
-
-  <section class="py-20">
-    <div class="container-shell">
-      <div class="max-w-3xl">
-        <p class="eyebrow">Perguntas frequentes</p>
-        <h2 class="mt-4 font-[Georgia] text-3xl text-white md:text-4xl">FAQ de horários</h2>
-      </div>
-      <div class="mt-10 divide-y divide-white/10 border-y border-white/10">
-        {faq.map((item) => <details class="group py-5"><summary class="cursor-pointer list-none pr-8 text-lg font-semibold text-white">{item.q}<span class="float-right text-[#e3a86f] group-open:rotate-45">+</span></summary><p class="mt-3 max-w-3xl leading-7 text-slate-400">{item.a}</p></details>)}
-      </div>
-      <div class="mt-12 rounded-[2rem] border border-white/10 bg-gradient-to-br from-[#0b1d29] to-[#07141d] p-7 md:p-10">
-        <p class="eyebrow">Canais oficiais</p>
-        <h2 class="mt-3 font-[Georgia] text-2xl text-white md:text-3xl">Confirme a operação no dia da visita</h2>
-        <div class="mt-6 flex flex-wrap gap-3 text-sm">
-          <a href="https://www.sie.sc.gov.br/" target="_blank" rel="noopener noreferrer" class="rounded-full border border-white/15 px-4 py-2 text-slate-200 hover:border-[#d68b46]">SIE/SC — infraestrutura e mobilidade ↗</a>
-          <a href="https://www.sc.gov.br/vivaaponte/" target="_blank" rel="noopener noreferrer" class="rounded-full border border-white/15 px-4 py-2 text-slate-200 hover:border-[#d68b46]">Governo de SC — Viva a Ponte ↗</a>
-          <a href="https://redeplanejamento.pmf.sc.gov.br/pt-BR/projetos/ponte-viva" target="_blank" rel="noopener noreferrer" class="rounded-full border border-white/15 px-4 py-2 text-slate-200 hover:border-[#d68b46]">Prefeitura de Florianópolis ↗</a>
-        </div>
-        <p class="mt-6 text-sm leading-7 text-slate-400">Este é um guia independente e sem fins lucrativos: as informações práticas refletem o padrão de uso observado e não substituem os comunicados oficiais.</p>
-      </div>
-      <div class="mt-10 flex flex-wrap gap-4 text-sm">
-        <a href="/como-chegar/" class="rounded-full border border-[#d68b46] px-5 py-3 font-bold text-[#efbd8d] no-underline hover:bg-[#d68b46] hover:text-[#07141d]">Como chegar →</a>
-        <a href="/historia/" class="rounded-full border border-white/15 px-5 py-3 font-bold text-slate-200 no-underline hover:border-[#d68b46]">História e engenharia →</a>
-      </div>
-    </div>
-  </section>
-</BaseLayout>
+<VisitorPage {...content} />

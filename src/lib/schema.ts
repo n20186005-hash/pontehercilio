@@ -1,4 +1,4 @@
-import { ADDRESS, ATTRACTION_NAME, GEO, MAPS_URL, RATING } from '../data/site';
+import { ADDRESS, ATTRACTION_NAME, GEO, MAPS_URL } from '../data/site';
 
 export type FaqItem = { q: string; a: string };
 
@@ -11,20 +11,17 @@ export function attractionSchema(origin: string): Record<string, unknown> {
     name: ATTRACTION_NAME,
     additionalType: 'https://schema.org/Bridge',
     alternateName: ['Ponte pênsil Hercílio Luz', 'Ponte Hercílio Luz de Florianópolis', 'Ponte Hercilio Luz', 'Puente Hercílio Luz', 'Hercílio Luz Bridge'],
-    description: 'Ponte pênsil histórica no Centro de Florianópolis (Santa Catarina, Brasil): patrimônio cultural tombado, símbolo do estado e um dos maiores exemplos de ponte suspensa por barras de olhal ainda em uso no mundo.',
+    description: 'Ponte pênsil histórica no Centro de Florianópolis (Santa Catarina, Brasil): patrimônio cultural tombado, símbolo do estado.',
     url: `${origin}/`,
     image: [`${origin}/images/ponte-hercilio-luz-hero.jpg`],
     address: { '@type': 'PostalAddress', ...ADDRESS },
     geo: { '@type': 'GeoCoordinates', ...GEO },
     hasMap: MAPS_URL,
-    openingHours: 'Acesso para visitação e travessia de pedestres sujeito às regras operacionais e a interdições temporárias; consulte os canais oficiais antes da visita.',
-    aggregateRating: { '@type': 'AggregateRating', ratingValue: RATING.value, reviewCount: RATING.count, bestRating: '5' },
-    isAccessibleForFree: true,
     sameAs: [
       'https://www.gov.br/iphan/pt-br/assuntos/noticias/ponte-hercilio-luz-chega-aos-100-anos-como-simbolo-de-santa-catarina',
       'https://www.sc.gov.br/vivaaponte/',
       'https://redeplanejamento.pmf.sc.gov.br/pt-BR/projetos/ponte-viva',
-      'https://www.santur.sc.gov.br/',
+      'https://www.setur.sc.gov.br/',
       MAPS_URL
     ]
   };

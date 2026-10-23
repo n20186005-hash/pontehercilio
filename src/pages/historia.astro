@@ -1,154 +1,69 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import { withSiteName } from '../data/site';
-import { attractionSchema, breadcrumbSchema, faqSchema, webPageSchema } from '../lib/schema';
-
-const pageTitle = 'História e engenharia';
-const pageDescription = 'História da Ponte Hercílio Luz, em Florianópolis: projeto de 1922, inauguração em 1926, pedágio de 1 tostão, interdições, tombamento em três esferas e a restauração concluída em 2019.';
-const pagePath = '/historia/';
-
-const siteOrigin = Astro.site ? Astro.site.toString().replace(/\/$/, '') : '';
-
-const chapters = [
-  ['A ideia: ligar a ilha ao continente', 'A travessia nasceu da ambição de Hercílio Luz, governador de Santa Catarina conhecido como o "pai das estradas" do estado. A obra foi viabilizada durante seu governo, mas ele morreu em 1924 — dois anos antes da inauguração — e a ponte acabou batizada com o seu nome.'],
-  ['Projeto e construção (1922–1926)', 'O projeto é da firma americana Robinson & Steinman, com participação de David B. Steinman, e a construção ficou com a American Bridge Company, usando aço e componentes trazidos dos Estados Unidos. As obras começaram em 14 de novembro de 1922 e a inauguração ocorreu em 13 de maio de 1926.'],
-  ['O pedágio de 1 tostão', 'Entre 1926 e 1935, atravessar custava 1 tostão (100 réis). A cobrança ajudava a pagar o financiamento obtido nos Estados Unidos, que só foi totalmente quitado em 1978 — mais de cinquenta anos depois da inauguração.'],
-  ['O peso do asfalto e as interdições', 'Em 1969, o tabuleiro original de madeira recebeu revestimento asfáltico, aumentando a carga sobre a estrutura. Fissuras detectadas nas barras de olhal em 1981 levaram à primeira interdição total em 1982; houve reabertura parcial em 1988 e nova interdição em 1991, quando o asfalto foi removido para aliviar o peso.'],
-  ['Tombamento em três esferas', 'A proteção veio em etapas: municipal em 1992, estadual em 1997 e federal em 1998, pelo Iphan. Somadas, essas decisões tornaram a ponte um dos monumentos mais protegidos de Santa Catarina.'],
-  ['O restauro e a reabertura de 2019', 'A grande restauração renovou a cadeia de suspensão, substituiu o tabuleiro por grelha metálica e, em 2017, ergueu o vão pênsil com macacos hidráulicos para trocar componentes — operação delicada e rara em pontes desse tipo. A reabertura completa ocorreu em 30 de dezembro de 2019.'],
-  ['Centenário e iluminação', 'Em 2026, a travessia completou cem anos como símbolo de Florianópolis e de Santa Catarina. Desde o fim de 2024, a iluminação cênica passou a valorizar a estrutura depois do pôr do sol, ampliando o interesse pela visita noturna.'],
-];
-
-const timeline = [
-  ['1922', 'Início das obras, em 14 de novembro.'],
-  ['1924', 'Morte do governador Hercílio Luz, idealizador do projeto.'],
-  ['1926', 'Inauguração em 13 de maio; pedágio de 1 tostão até 1935.'],
-  ['1969', 'O tabuleiro de madeira recebe revestimento asfáltico.'],
-  ['1975', 'A Ponte Colombo Salles encerra o período de única ligação rodoviária.'],
-  ['1982', 'Primeira interdição total para veículos, após fissuras de 1981.'],
-  ['1988', 'Reabertura parcial para pedestres, ciclistas e motociclistas.'],
-  ['1991', 'Nova interdição; o asfalto é removido para aliviar a estrutura.'],
-  ['1998', 'Tombamento federal pelo Iphan.'],
-  ['2019', 'Reabertura completa em 30 de dezembro, após o grande restauro.'],
-  ['2024', 'Entra em operação a iluminação cênica.'],
-  ['2026', 'Centenário da travessia.'],
-];
-
-const faq = [
-  { q: 'Quem foi Hercílio Luz?', a: 'Hercílio Luz foi governador de Santa Catarina e ficou conhecido como o "pai das estradas" do estado por causa dos investimentos em rodovias e ligações viárias. A ponte recebeu seu nome em homenagem póstuma: ele morreu em 1924, sem ver a obra concluída.' },
-  { q: 'Quando a Ponte Hercílio Luz foi inaugurada?', a: 'A inauguração ocorreu em 13 de maio de 1926, com as obras iniciadas em 14 de novembro de 1922. Em 2026, a travessia completou cem anos.' },
-  { q: 'A ponte já foi paga?', a: 'Sim. Entre 1926 e 1935, a travessia custava 1 tostão (100 réis). A arrecadação ajudava a quitar o financiamento obtido nos Estados Unidos, que só foi totalmente pago em 1978. Hoje não há cobrança para pedestres e ciclistas.' },
-  { q: 'Por que a ponte ficou tantos anos fechada?', a: 'Fissuras detectadas nas barras de olhal em 1981 levaram à interdição para veículos em 1982. Depois de uma reabertura parcial em 1988, nova interdição ocorreu em 1991, quando o asfalto aplicado em 1969 foi removido para reduzir o peso sobre a estrutura centenária.' },
-  { q: 'A Ponte Hercílio Luz é a maior ponte pênsil do Brasil?', a: 'Sim, com 339,5 m de vão central sustentado por cadeias de barras de olhal. Além do tamanho, o que a torna singular é o sistema construtivo: é um dos maiores exemplos vivos de ponte suspensa por barras de olhal ainda em uso no mundo.' },
-  { q: 'Por que a ponte é tombada?', a: 'O tombamento reconhece o valor histórico, cultural e de engenharia da obra. Ele ocorreu nas três esferas: municipal (1992), estadual (1997) e federal, pelo Iphan (1998). Na prática, qualquer intervenção na estrutura passa por análise e autorização dos órgãos de patrimônio.' },
-];
-
-const schema = [
-  attractionSchema(siteOrigin),
-  webPageSchema(siteOrigin, pagePath, withSiteName(pageTitle), pageDescription),
-  breadcrumbSchema(siteOrigin, [
-    { name: 'Início', path: '/' },
-    { name: pageTitle, path: pagePath }
-  ]),
-  faqSchema(faq),
-];
+import VisitorPage from "../components/VisitorPage.astro";
+const content = {
+  "title": "História da Ponte Hercílio Luz: 1926 ao centenário",
+  "description": "História documentada da Ponte Hercílio Luz: obras em 1922, inauguração em 1926, tombamento federal, reabertura em 2019 e centenário em 2026.",
+  "intro": "A Ponte Hercílio Luz completou cem anos de inauguração em 13 de maio de 2026. Seu sistema pênsil e a ligação entre a ilha e o continente fazem parte da paisagem e da história de Florianópolis.",
+  "image": "estrutura",
+  "sections": [
+    [
+      "1922–1926: construção e inauguração",
+      "O MPC-SC registra o início das obras em 14 de novembro de 1922 e a inauguração em 13 de maio de 1926. O centenário é da inauguração, não do início das obras. A travessia ligou a ilha ao continente, antes conectados também por embarcações."
+    ],
+    [
+      "Uma ponte pênsil de barras de olhal",
+      "A ponte utiliza cadeias de barras de olhal em seu sistema de suspensão. Não se trata de uma ponte estaiada. A referência técnica Viva a Ponte apresenta cerca de 821 metros de extensão total e 339,5 metros de vão central; são medidas de partes diferentes da estrutura."
+    ],
+    [
+      "Por que aparecem 821 e 822 metros?",
+      "A página técnica Viva a Ponte informa aproximadamente 821 metros; o texto do MPC-SC de 2026 usa aproximadamente 822 metros. São referências com arredondamentos distintos. Para o visitante, o ponto essencial é não confundir o comprimento total com o vão suspenso."
+    ],
+    [
+      "Patrimônio e restauração",
+      "O Iphan registra o tombamento federal em 1998. A SETUR documenta a reabertura em 2019 após a restauração. A manutenção de um patrimônio em uso pode afetar a circulação, por isso a história da reabertura não garante a liberação no presente."
+    ],
+    [
+      "2026: cem anos de inauguração",
+      "O centenário foi registrado pelo Iphan e pelo MPC-SC. Fotografias do guia foram feitas em anos anteriores e preservam aspectos da estrutura e da paisagem dessas épocas. Elas não comprovam a iluminação ou a configuração atual de circulação."
+    ]
+  ],
+  "faq": [
+    {
+      "q": "Quando a ponte foi inaugurada?",
+      "a": "Em 13 de maio de 1926, após obras iniciadas em 14 de novembro de 1922. Em maio de 2026 completou cem anos da inauguração."
+    },
+    {
+      "q": "A Ponte Hercílio Luz é pênsil ou estaiada?",
+      "a": "É uma ponte pênsil, com cadeias de barras de olhal no sistema de suspensão."
+    },
+    {
+      "q": "A ponte mede 821 ou 822 metros?",
+      "a": "Viva a Ponte publica aproximadamente 821 metros; o MPC-SC arredonda para aproximadamente 822 metros. O vão central é uma medida separada, indicada como 339,5 metros na referência técnica."
+    }
+  ],
+  "path": "/historia/",
+  "sources": [
+    [
+      "MPC-SC — centenário e circulação de veículos (6/7/2026)",
+      "https://www.mpc.sc.gov.br/noticias/centenario-da-ponte-hercilio-luz-evidencia-importancia-da-fiscalizacao-dos-recursos-publicos-e-atuacao-do-mpc-sc/"
+    ],
+    [
+      "Governo de SC — características da ponte",
+      "https://www.sc.gov.br/vivaaponte/caracteristicas-da-ponte-hercilio-luz/"
+    ],
+    [
+      "Iphan — centenário e patrimônio",
+      "https://www.gov.br/iphan/pt-br/assuntos/noticias/ponte-hercilio-luz-chega-aos-100-anos-como-simbolo-de-santa-catarina"
+    ],
+    [
+      "SIE — consulte avisos de operação",
+      "https://www.sie.sc.gov.br/"
+    ],
+    [
+      "Prefeitura — Ponte Viva",
+      "https://redeplanejamento.pmf.sc.gov.br/pt-BR/projetos/ponte-viva"
+    ]
+  ]
+};
 ---
-
-<BaseLayout
-  title={withSiteName(pageTitle)}
-  description={pageDescription}
-  path={pagePath}
-  schema={schema}
->
-  <section class="container-shell pt-36 pb-16">
-    <nav aria-label="Trilha de navegação" class="text-xs uppercase tracking-[.16em] text-slate-500">
-      <ol class="flex flex-wrap items-center gap-x-2">
-        <li><a class="hover:text-white" href="/">Início</a></li>
-        <li aria-hidden="true">/</li>
-        <li class="text-slate-300">História e engenharia</li>
-      </ol>
-    </nav>
-    <h1 class="mt-6 max-w-4xl font-[Georgia] text-4xl leading-tight text-white md:text-6xl">História da Ponte Hercílio Luz: do projeto de 1922 ao centenário</h1>
-    <p class="mt-6 max-w-3xl text-lg leading-8 text-slate-300">Cem anos separam o início das obras da ponte que se tornou o símbolo de <strong class="text-white">Florianópolis</strong> e de <strong class="text-white">Santa Catarina</strong>. Nesse intervalo houve pedágio, interdições, tombamento em três esferas e uma restauração que a devolveu à cidade.</p>
-  </section>
-
-  <section class="border-y border-white/10 bg-[#081721] py-20">
-    <div class="container-shell grid gap-12 lg:grid-cols-[1.05fr_.95fr] lg:items-center">
-      <div>
-        <p class="eyebrow">Capítulos da travessia</p>
-        <h2 class="mt-4 font-[Georgia] text-3xl text-white md:text-4xl">Como a ponte chegou ao centenário</h2>
-        <div class="mt-10 space-y-6">
-          {chapters.map(([title, text]) => (
-            <article class="rounded-3xl border border-white/10 bg-black/20 p-6">
-              <h3 class="text-lg font-semibold text-white">{title}</h3>
-              <p class="mt-3 leading-7 text-slate-400">{text}</p>
-            </article>
-          ))}
-        </div>
-      </div>
-      <img src="/images/ponte-hercilio-luz-estrutura.jpg" alt="Torres e estrutura metálica da Ponte Hercílio Luz" class="aspect-[3/4] w-full rounded-[2rem] object-cover" width="1200" height="1600" loading="lazy" decoding="async" />
-    </div>
-  </section>
-
-  <section class="py-20">
-    <div class="container-shell">
-      <p class="eyebrow">Linha do tempo</p>
-      <h2 class="mt-4 font-[Georgia] text-3xl text-white md:text-4xl">Datas que explicam a ponte</h2>
-      <ol class="mt-10 grid gap-x-10 gap-y-6 sm:grid-cols-2 lg:grid-cols-3">
-        {timeline.map(([year, text]) => (
-          <li class="relative border-l border-white/10 pl-5">
-            <span class="absolute -left-1 top-1.5 h-2.5 w-2.5 rounded-full bg-[#d68b46]"></span>
-            <div class="font-[Georgia] text-xl text-[#e3a86f]">{year}</div>
-            <p class="mt-1 text-sm leading-6 text-slate-400">{text}</p>
-          </li>
-        ))}
-      </ol>
-    </div>
-  </section>
-
-  <section class="border-y border-white/10 bg-[#07141d] py-20">
-    <div class="container-shell grid gap-10 lg:grid-cols-[.85fr_1.15fr]">
-      <div>
-        <p class="eyebrow">Engenharia</p>
-        <h2 class="mt-4 font-[Georgia] text-3xl text-white md:text-4xl">Uma pênsil de barras de olhal</h2>
-        <p class="mt-6 leading-8 text-slate-300">Ao contrário dos cabos de aço usados nas pontes pênsiles atuais, a Hercílio Luz é sustentada por <strong class="text-white">cadeias de barras de olhal</strong> (eye-bars) que passam sobre torres de cerca de 74 m e distribuem o peso do vão central de 339,5 m.</p>
-        <p class="mt-5 leading-8 text-slate-400">Essa solução — e não o sistema estaiado, em que os cabos saem das torres em leque até o tabuleiro — é o que faz da ponte um caso singular de engenharia do início do século XX.</p>
-        <a href="/#pensil-estaiada" class="mt-8 inline-flex rounded-full border border-[#d68b46] px-5 py-3 text-sm font-bold text-[#efbd8d] no-underline hover:bg-[#d68b46] hover:text-[#07141d]">Ver pênsil x estaiada →</a>
-      </div>
-      <dl class="grid gap-4 sm:grid-cols-2">
-        <div class="rounded-3xl border border-white/10 bg-black/20 p-6"><dt class="text-[11px] font-bold uppercase tracking-[.16em] text-slate-500">Extensão total</dt><dd class="mt-2 text-2xl text-[#e3a86f]">821 m</dd></div>
-        <div class="rounded-3xl border border-white/10 bg-black/20 p-6"><dt class="text-[11px] font-bold uppercase tracking-[.16em] text-slate-500">Vão central pênsil</dt><dd class="mt-2 text-2xl text-[#e3a86f]">339,5 m</dd></div>
-        <div class="rounded-3xl border border-white/10 bg-black/20 p-6"><dt class="text-[11px] font-bold uppercase tracking-[.16em] text-slate-500">Altura das torres</dt><dd class="mt-2 text-2xl text-[#e3a86f]">74 m</dd></div>
-        <div class="rounded-3xl border border-white/10 bg-black/20 p-6"><dt class="text-[11px] font-bold uppercase tracking-[.16em] text-slate-500">Aço na estrutura</dt><dd class="mt-2 text-2xl text-[#e3a86f]">≈ 5.000 t</dd></div>
-        <div class="rounded-3xl border border-white/10 bg-black/20 p-6"><dt class="text-[11px] font-bold uppercase tracking-[.16em] text-slate-500">Projeto</dt><dd class="mt-2 text-base leading-7 text-slate-200">Robinson &amp; Steinman (EUA)</dd></div>
-        <div class="rounded-3xl border border-white/10 bg-black/20 p-6"><dt class="text-[11px] font-bold uppercase tracking-[.16em] text-slate-500">Construção</dt><dd class="mt-2 text-base leading-7 text-slate-200">American Bridge Company</dd></div>
-      </dl>
-    </div>
-  </section>
-
-  <section class="py-20">
-    <div class="container-shell">
-      <div class="max-w-3xl">
-        <p class="eyebrow">Perguntas frequentes</p>
-        <h2 class="mt-4 font-[Georgia] text-3xl text-white md:text-4xl">FAQ de história</h2>
-      </div>
-      <div class="mt-10 divide-y divide-white/10 border-y border-white/10">
-        {faq.map((item) => <details class="group py-5"><summary class="cursor-pointer list-none pr-8 text-lg font-semibold text-white">{item.q}<span class="float-right text-[#e3a86f] group-open:rotate-45">+</span></summary><p class="mt-3 max-w-3xl leading-7 text-slate-400">{item.a}</p></details>)}
-      </div>
-      <div class="mt-10 rounded-[2rem] border border-white/10 bg-gradient-to-br from-[#0b1d29] to-[#07141d] p-7 md:p-10">
-        <p class="eyebrow">Fontes institucionais</p>
-        <h2 class="mt-3 font-[Georgia] text-2xl text-white md:text-3xl">Onde conferir a história oficial</h2>
-        <div class="mt-6 flex flex-wrap gap-3 text-sm">
-          <a href="https://www.gov.br/iphan/pt-br/assuntos/noticias/ponte-hercilio-luz-chega-aos-100-anos-como-simbolo-de-santa-catarina" target="_blank" rel="noopener noreferrer" class="rounded-full border border-white/15 px-4 py-2 text-slate-200 hover:border-[#d68b46]">Iphan — centenário e tombamento ↗</a>
-          <a href="https://www.sc.gov.br/vivaaponte/linha-do-tempo/" target="_blank" rel="noopener noreferrer" class="rounded-full border border-white/15 px-4 py-2 text-slate-200 hover:border-[#d68b46]">Governo de SC — linha do tempo ↗</a>
-          <a href="https://redeplanejamento.pmf.sc.gov.br/pt-BR/projetos/ponte-viva" target="_blank" rel="noopener noreferrer" class="rounded-full border border-white/15 px-4 py-2 text-slate-200 hover:border-[#d68b46]">Prefeitura de Florianópolis — Ponte Viva ↗</a>
-        </div>
-        <p class="mt-6 text-sm leading-7 text-slate-400">Conteúdo educativo e sem fins lucrativos. Datas e números seguem registros públicos das fontes indicadas; para pesquisa acadêmica, consulte diretamente os órgãos de patrimônio.</p>
-      </div>
-      <div class="mt-10 flex flex-wrap gap-4 text-sm">
-        <a href="/horarios/" class="rounded-full border border-[#d68b46] px-5 py-3 font-bold text-[#efbd8d] no-underline hover:bg-[#d68b46] hover:text-[#07141d]">Horários e circulação →</a>
-        <a href="/como-chegar/" class="rounded-full border border-white/15 px-5 py-3 font-bold text-slate-200 no-underline hover:border-[#d68b46]">Como chegar →</a>
-      </div>
-    </div>
-  </section>
-</BaseLayout>
+<VisitorPage {...content} />

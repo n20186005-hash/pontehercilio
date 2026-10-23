@@ -1,8 +1,4 @@
-# Configuração do pnpm v11 (a configuração vive em pnpm-workspace.yaml).
-# pnpm v11 espera "allowBuilds" como mapa pacote -> true/false (não é lista,
-# e o nome da chave v10 era "onlyBuiltDependencies"). Sem isto, o instalador
-# bloqueia os postinstall de esbuild/workerd com ERR_PNPM_IGNORED_BUILDS e a
-# plataforma aborta em "Installing project dependencies".
 allowBuilds:
-  esbuild: true
-  workerd: true
+  esbuild@0.28.1: true
+  esbuild@0.28.2: true
+  workerd@1.20260831.1: true

@@ -1,9 +1,12 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "ponte-hercilio-luz-guia",
+  "name": "pontehercilio",
+  "main": "./src/worker.js",
   "compatibility_date": "2026-09-02",
   "assets": {
     "directory": "./dist",
+    "binding": "ASSETS",
+    "run_worker_first": true,
     "not_found_handling": "404-page"
   }
 }

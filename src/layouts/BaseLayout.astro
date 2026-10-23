@@ -34,8 +34,6 @@ const schemas = Array.isArray(schema) ? schema : schema ? [schema] : [];
     <link rel="icon" type="image/png" sizes="16x16" href="/brand/favicon-16.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/brand/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
-    <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
-    <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
@@ -54,30 +52,7 @@ const schemas = Array.isArray(schema) ? schema : schema ? [schema] : [];
     {ogImage && <meta name="twitter:image" content={ogImage} />}
     {ogImage && <meta name="twitter:image:alt" content="Ponte Hercílio Luz, ponte pênsil no Centro de Florianópolis (Santa Catarina, Brasil)" />}
     {schemas.map((item) => <script is:inline type="application/ld+json" set:html={JSON.stringify(item)} />)}
-    <script is:inline>
-      (() => {
-        const KEY = 'phl-cookie-preferences';
-        const loadAnalytics = () => {
-          if (window.__phlAnalyticsLoaded) return;
-          window.__phlAnalyticsLoaded = true;
-          window.dataLayer = window.dataLayer || [];
-          window.gtag = function(){ window.dataLayer.push(arguments); };
-          window.gtag('js', new Date());
-          window.gtag('config', 'G-HXM22WWPKP', { anonymize_ip: true });
-          const script = document.createElement('script');
-          script.async = true;
-          script.src = 'https://www.googletagmanager.com/gtag/js?id=G-HXM22WWPKP';
-          document.head.appendChild(script);
-        };
-        try {
-          const saved = JSON.parse(localStorage.getItem(KEY) || 'null');
-          if (saved?.analytics === true) loadAnalytics();
-        } catch {}
-        window.addEventListener('phl-consent-updated', (event) => {
-          if (event.detail?.analytics === true) loadAnalytics();
-        });
-      })();
-    </script>
+    <script is:inline src="/analytics.js"></script>
     <script is:inline>
       if ('serviceWorker' in navigator && location.protocol === 'https:') {
         window.addEventListener('load', () => {
@@ -101,6 +76,7 @@ const schemas = Array.isArray(schema) ? schema : schema ? [schema] : [];
         <a href="/#curiosidades" class="hidden rounded-full border border-white/15 px-3 py-1.5 text-xs font-semibold text-slate-300 transition hover:border-[#d68b46] hover:text-white xl:inline-flex">Curiosidades</a>
         <a href="https://maps.app.goo.gl/NTxFSZTyTbenYDZo6" target="_blank" rel="noopener noreferrer" class="rounded-full border border-[#d68b46]/70 px-4 py-2 text-xs font-semibold tracking-wide text-[#f0c494] transition hover:bg-[#d68b46] hover:text-[#07141d]">Abrir no mapa</a>
       </div>
+      <nav class="mobile-nav container-shell" aria-label="Navegação móvel"><a href="/horarios/">Horários</a><a href="/como-chegar/">Como chegar</a><a href="/historia/">História</a><a href="/#clima">Clima</a></nav>
     </header>
     <main><slot /></main>
     <Footer />

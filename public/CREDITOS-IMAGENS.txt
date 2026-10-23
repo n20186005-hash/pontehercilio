@@ -1,39 +1,31 @@
-CRÉDITOS DAS IMAGENS — GUIA PONTE HERCÍLIO LUZ
-Última atualização: 3 de setembro de 2026
+Créditos por arquivo e links de origem/licença: https://pontehercilio.com/creditos/
 
-As fotografias exibidas neste site são arquivos locais do próprio projeto (sem hotlink),
-servidos a partir das seguintes rotas:
+ponte-hercilio-luz-hero.jpg — FREITASFOTOS — 21/7/2013
+https://commons.wikimedia.org/wiki/File:Ponte_Herc%C3%ADlio_Luz_FREITASFOTOS_002.jpg
+https://creativecommons.org/licenses/by-sa/4.0/
+Alterações: redimensionamento e recompressão; recorte visual de exibição.
 
-- /images/ponte-hercilio-luz-hero.jpg
-- /images/ponte-hercilio-luz-estrutura.jpg
-- /images/ponte-hercilio-luz-passarela.jpg
-- /images/ponte-hercilio-luz-panorama.jpg
-- /images/ponte-hercilio-luz-noite.jpg
-- /images/ponte-hercilio-luz-detalhe.jpg
+ponte-hercilio-luz-estrutura.jpg — Mariane C Galvao — 15/5/2020
+https://commons.wikimedia.org/wiki/File:PONTE_HERCILIO_LUZ.jpg
+https://creativecommons.org/licenses/by-sa/4.0/
+Alterações: redimensionamento e recompressão; recorte visual de exibição.
 
-Cada fotografia permanece de propriedade de seu respectivo autor e é utilizada
-conforme a licença indicada. O acervo do projeto foi selecionado a partir das obras
-reais da ponte verificadas em Wikimedia Commons e listadas abaixo (atribuição e
-licença completas na página de cada arquivo):
+ponte-hercilio-luz-noite.jpg — Pmichelazzo — 21/5/2009
+https://commons.wikimedia.org/wiki/File:Hercilio_Luz_bridge.jpg
+https://creativecommons.org/licenses/by-sa/3.0/
+Alterações: redimensionamento e recompressão; recorte visual de exibição.
 
-1. "Ponte Hercílio Luz FREITASFOTOS 002.jpg" — FREITASFOTOS — CC BY-SA 4.0
-   https://commons.wikimedia.org/wiki/File:Ponte_Herc%C3%ADlio_Luz_FREITASFOTOS_002.jpg
-2. "PONTE HERCILIO LUZ.jpg" — Mariane C Galvao — CC BY-SA 4.0
-   https://commons.wikimedia.org/wiki/File:PONTE_HERCILIO_LUZ.jpg
-3. "Hercilio Luz bridge.jpg" — Pmichelazzo — CC BY-SA 3.0
-   https://commons.wikimedia.org/wiki/File:Hercilio_Luz_bridge.jpg
-4. "Ponte Hercílio Luz Florianopolis.jpg" — Rodrigo Soldon — CC BY 2.0
-   https://commons.wikimedia.org/wiki/File:Ponte_Herc%C3%ADlio_Luz_Florianopolis.jpg
-5. "Hercílio Luz Bridge.jpg" — Dpc01 — licença indicada na página do arquivo
-   https://commons.wikimedia.org/wiki/File:Herc%C3%ADlio_Luz_Bridge.jpg
-6. "Ponte Hercílio Luz, Florianópolis SC Brasil.jpg" — autoria e licença a confirmar
-   na página do arquivo antes da redistribuição
-   https://commons.wikimedia.org/wiki/File:Ponte_Herc%C3%ADlio_Luz,_Florian%C3%B3polis_SC_Brasil.jpg
+ponte-hercilio-luz-panorama.jpg — Rodrigo Soldon — 23/3/2009
+https://commons.wikimedia.org/wiki/File:Ponte_Herc%C3%ADlio_Luz_Florianopolis.jpg
+https://creativecommons.org/licenses/by/2.0/
+Alterações: redimensionamento e recompressão; recorte visual de exibição.
 
-Status antes da publicação: o emparelhamento definitivo arquivo local -> obra (qual das
-obras acima corresponde a cada fotografia exibida) está em confirmação e será registrado
-neste arquivo antes do lançamento público do site. O arquivo FOTO-FONTES.md, na raiz do
-repositório, mantém o controle de fontes do acervo.
+ponte-hercilio-luz-passarela.jpg — Dpc01 — 18/2/2012
+https://commons.wikimedia.org/wiki/File:Herc%C3%ADlio_Luz_Bridge.jpg
+https://creativecommons.org/licenses/by-sa/3.0/
+Alterações: redimensionamento e recompressão; recorte visual de exibição.
 
-Conteúdo editorial, marca e diagramação: © 2026 Guia Ponte Hercílio Luz —
-Florianópolis, Santa Catarina.
+ponte-hercilio-luz-detalhe.jpg — Fernanda Nucci — 25/4/2015
+https://commons.wikimedia.org/wiki/File:Ponte_Herc%C3%ADlio_Luz%2C_Florian%C3%B3polis_SC_Brasil.jpg
+https://creativecommons.org/licenses/by-sa/3.0/
+Alterações: redimensionamento e recompressão; recorte visual de exibição.

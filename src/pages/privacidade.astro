@@ -1,27 +1,6 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import { withSiteName } from '../data/site';
+import BaseLayout from "../layouts/BaseLayout.astro";
+import {withSiteName} from "../data/site";
 ---
-<BaseLayout title={withSiteName('Política de privacidade')} description="Política de privacidade do Guia Ponte Hercílio Luz." path="/privacidade/">
-  <section class="container-shell pt-36 pb-24">
-    <p class="eyebrow">Documentos do site</p>
-    <h1 class="mt-4 font-[Georgia] text-5xl text-white md:text-7xl">Política de Privacidade</h1>
-    <p class="mt-4 text-sm text-slate-500">Última atualização: setembro de 2026</p>
-    <div class="prose-legal mt-12 max-w-3xl">
-      <p>Este guia adota o princípio da minimização de dados: coletamos apenas o que é necessário para operar, proteger e compreender o uso do site.</p>
-      <h2>Informações que podem ser coletadas</h2>
-      <ul><li>Dados técnicos de navegação, como endereço IP, tipo de navegador, dispositivo, páginas acessadas e horários de acesso.</li><li>Cookies e tecnologias semelhantes, conforme as preferências escolhidas pelo visitante.</li><li>Informações que você forneça voluntariamente ao entrar em contato por algum canal indicado no site.</li></ul>
-      <h2>Como utilizamos as informações</h2>
-      <ul><li>Melhorar o conteúdo, desempenho e experiência de navegação.</li><li>Analisar padrões agregados de tráfego e uso, quando houver consentimento para analytics.</li><li>Responder a solicitações enviadas voluntariamente.</li><li>Cumprir obrigações legais e proteger a segurança do site.</li></ul>
-      <h2>Serviços de terceiros</h2>
-      <p>O site incorpora Google Maps para localização e consulta a previsão do tempo diretamente à API aberta Open-Meteo (sem chave e sem cookies). O Google Analytics 4 é carregado somente quando o visitante ativa cookies de análise. Esses fornecedores tratam dados segundo suas próprias políticas. As fotografias distribuídas no projeto ficam armazenadas localmente no site; os créditos e licenças dos autores são mantidos separadamente.</p>
-      <h2>Seus direitos</h2>
-      <p>Conforme a legislação aplicável, incluindo a LGPD quando pertinente e, para visitantes cobertos por ela, a GDPR, você pode ter direito a acessar, corrigir ou solicitar a exclusão de dados pessoais, limitar ou se opor a determinados tratamentos e apresentar reclamação à autoridade competente.</p>
-      <h2>Retenção e segurança</h2>
-      <p>Preferências de cookies são mantidas no navegador para lembrar a escolha do visitante. Dados de terceiros, quando coletados mediante consentimento, seguem os prazos e medidas de segurança do respectivo fornecedor.</p>
-      <p>Para tornar a navegação mais rápida e permitir funcionamento offline básico, este site utiliza um <em>service worker</em> que guarda cópias locais (cache) de páginas e imagens no próprio navegador do visitante. Esse cache é exclusivo deste domínio, não é compartilhado com terceiros e pode ser removido a qualquer momento pelo visitante, nas configurações do navegador (limpeza de dados de navegação ou de cache do site).</p>
-      <h2>Alterações</h2>
-      <p>Esta política pode ser revisada para refletir mudanças legais, técnicas ou operacionais. A versão publicada nesta página é a vigente para este site.</p>
-    </div>
-  </section>
-</BaseLayout>
+<BaseLayout title={withSiteName("Política de privacidade")} description="Política de privacidade do guia independente da Ponte Hercílio Luz." path="/privacidade/">
+<section class="container-shell pt-36 pb-24"><p class="eyebrow">Documentos do site</p><h1 class="mt-4 font-[Georgia] text-5xl">Política de privacidade</h1><p class="mt-4 text-sm text-slate-400">Atualizado em 23 de outubro de 2026</p><div class="prose-legal mt-10 max-w-3xl"><h2>Dados e serviços externos</h2><p>A hospedagem recebe dados técnicos da conexão, como endereço IP, navegador e URL solicitada, para entregar e proteger o site. Ao consultar a previsão, o navegador contata a API Open-Meteo. O mapa incorporado contata o Google Maps; esses serviços seguem suas próprias políticas.</p><h2>Google Analytics e escolha</h2><p>O Google Analytics 4, identificador G-HXM22WWPKP, é ativado por uma escolha de análise disponível no armazenamento local. Nas configurações de cookies, você pode retirar essa escolha. A retirada bloqueia a análise imediatamente nesta página, inclusive se o navegador impedir a gravação. Se a gravação falhar, outra página ou visita pode ainda ler uma permissão anterior; o controle informa essa limitação. Uma nova ativação exige gravação e leitura de confirmação.</p><h2>Hospedagem e medição independente</h2><p>A hospedagem Cloudflare pode fornecer segurança, registros técnicos e medição de desempenho, inclusive por beacon configurado na hospedagem. O controle de Google Analytics não administra esses serviços independentes. A presença de um script não demonstra, por si, envio bem-sucedido de dados. Consulte a documentação de origem e coleta da Cloudflare para o funcionamento desse serviço.</p><h2>Armazenamento local</h2><p>O site guarda a escolha de análise no localStorage. A previsão utiliza cache local de até 30 minutos; indisponibilidade do armazenamento não impede a consulta de rede. O service worker guarda recursos locais e páginas consultadas para uso offline. Cópias offline podem estar desatualizadas. Você pode limpar esses dados nas configurações do navegador.</p><h2>Limites e direitos</h2><p>Não há formulário de cadastro ou compra neste guia. Fotografias são servidas pelo próprio site e têm créditos vinculados por arquivo. Consulte as políticas de cada fornecedor para retenção e tratamento dos dados de seus serviços. Direitos e solicitações de privacidade dependem da legislação aplicável e do responsável por cada tratamento.</p><p><a class="text-[#efbd8d] underline" href="/cookies/">Configurações de cookies</a> · <a class="text-[#efbd8d] underline" href="/creditos/">Créditos das fotografias</a></p><p><a href="https://developers.cloudflare.com/web-analytics/data-origin-and-collection/" class="underline">Cloudflare — origem e coleta de dados</a> · <a href="https://open-meteo.com/en/terms" class="underline">Open-Meteo — termos e privacidade</a> · <a href="https://policies.google.com/privacy" class="underline">Google — privacidade</a></p></div></section></BaseLayout>
